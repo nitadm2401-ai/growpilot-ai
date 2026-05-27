@@ -1,0 +1,17 @@
+{
+  "name": "growpilot-ai",
+  "version": "1.0.0",
+  "description": "AI SaaS Social Media & GMB marketing automation dashboard.",
+  "scripts": {
+    "dev": "npx -y http-server -p 3000"
+  },
+  "keywords": [
+    "ai",
+    "marketing",
+    "saas",
+    "social-media",
+    "gmb"
+  ],
+  "author": "GrowPilot AI Team",
+  "license": "MIT"
+}
