@@ -864,3 +864,34 @@ function handleNewEventSchedule() {
     updateUISnapshots();
     alert(`Successfully scheduled your post '${title}' on ${date}!`);
 }
+
+// Fallback logic if Pollinations.ai image loading fails (e.g. ISP blocks it in India)
+function handleImageLoadError(img) {
+    console.warn("Dynamic AI image generator failed to load, swapping with stable Unsplash niche fallback.");
+    const niche = (BrandManager.brandProfile.niche || "pharmacy").toLowerCase();
+    
+    // Map niches to highly stable high-quality Unsplash image URLs
+    let fallbackUrl = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop"; // Default marketing
+    
+    if (niche.includes("chemist") || niche.includes("pharmacy") || niche.includes("medical")) {
+        fallbackUrl = "https://images.unsplash.com/photo-1586015555751-63bb77f4322a?w=600&auto=format&fit=crop";
+    } else if (niche.includes("cafe") || niche.includes("tea") || niche.includes("coffee") || niche.includes("beverage")) {
+        fallbackUrl = "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&auto=format&fit=crop";
+    } else if (niche.includes("restaurant") || niche.includes("food") || niche.includes("dhaba") || niche.includes("catering")) {
+        fallbackUrl = "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&auto=format&fit=crop";
+    } else if (niche.includes("gym") || niche.includes("fitness") || niche.includes("workout") || niche.includes("exercise")) {
+        fallbackUrl = "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&auto=format&fit=crop";
+    } else if (niche.includes("salon") || niche.includes("spa") || niche.includes("parlor") || niche.includes("beauty") || niche.includes("hair")) {
+        fallbackUrl = "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&auto=format&fit=crop";
+    } else if (niche.includes("kirana") || niche.includes("grocery") || niche.includes("store") || niche.includes("general") || niche.includes("shop")) {
+        fallbackUrl = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&auto=format&fit=crop";
+    } else if (niche.includes("boutique") || niche.includes("fashion") || niche.includes("clothing") || niche.includes("tailor")) {
+        fallbackUrl = "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&auto=format&fit=crop";
+    } else if (niche.includes("it") || niche.includes("startup") || niche.includes("software") || niche.includes("tech") || niche.includes("computer")) {
+        fallbackUrl = "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&auto=format&fit=crop";
+    }
+
+    // Set fallback source, and prevent infinite loop error if Unsplash is also blocked
+    img.onerror = null;
+    img.src = fallbackUrl;
+}
