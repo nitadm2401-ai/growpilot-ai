@@ -862,6 +862,4 @@ function handleNewEventSchedule() {
     closeActiveModal();
     renderCalendar();
     updateUISnapshots();
-    alert(`Successfully scheduled your post '${title}' on ${date}!`);
-}
 }
