@@ -1,0 +1,656 @@
+/* Dashboard Workspace Styling for GrowthAura AI */
+
+.app-workspace-container {
+    display: none; /* Controlled via JS, block when active */
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    margin-top: 80px;
+    display: flex;
+}
+
+/* Workspace Sidebar Navigation */
+.workspace-sidebar {
+    width: 260px;
+    background: var(--bg-deep);
+    border-right: 1px solid var(--border-color);
+    padding: 30px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    flex-shrink: 0;
+}
+
+.sidebar-menu {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: var(--transition);
+}
+
+.menu-item:hover, .menu-item.active {
+    background: var(--bg-card);
+    color: var(--primary);
+}
+
+.menu-item.active {
+    border-left: 3px solid var(--primary);
+    padding-left: 13px;
+}
+
+.menu-item-icon {
+    font-size: 1.2rem;
+}
+
+/* Main Content Panel */
+.workspace-content-pane {
+    flex-grow: 1;
+    padding: 40px;
+    background: var(--bg-dark);
+    overflow-y: auto;
+    max-height: calc(100vh - 80px);
+}
+
+@media (max-width: 992px) {
+    .app-workspace-container {
+        flex-direction: column;
+    }
+    .workspace-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding: 20px;
+    }
+    .workspace-content-pane {
+        padding: 20px;
+    }
+}
+
+/* View Containers (Toggled via JS) */
+.workspace-view {
+    display: none;
+}
+.workspace-view.active {
+    display: block;
+}
+
+/* View Header */
+.view-header {
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+}
+.view-header h2 {
+    font-size: 2rem;
+    margin-bottom: 6px;
+}
+.view-header p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* Dashboard Overview Cards */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.stat-card .stat-value {
+    font-size: 2.2rem;
+    font-weight: 800;
+    font-family: var(--font-heading);
+    color: var(--primary);
+}
+.stat-card .stat-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* AI Poster Creator Studio */
+.poster-workspace-split {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 30px;
+}
+
+@media (max-width: 992px) {
+    .poster-workspace-split {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Interactive Canvas Styling */
+.poster-canvas-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 480px;
+    background: var(--bg-deep);
+    border-radius: var(--radius-lg);
+    border: 1px dashed var(--border-color);
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.creative-poster-canvas {
+    width: 360px;
+    height: 450px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, #1e1e2f, #0f0f1a);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px;
+    transition: var(--transition);
+}
+
+.canvas-brand-name {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.canvas-main-caption {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 800;
+    line-height: 1.25;
+    color: #fff;
+    margin: auto 0;
+    word-wrap: break-word;
+}
+
+.canvas-footer-cta {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Mini Website Smartphone Mockup */
+.minisite-workspace-split {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 30px;
+}
+
+@media (max-width: 992px) {
+    .minisite-workspace-split {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Responsive Glassmorphic Smartphone Viewport */
+.phone-mockup-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+}
+
+.smartphone-device {
+    width: 340px;
+    height: 680px;
+    background: #000;
+    border-radius: 40px;
+    border: 12px solid #1a1a24;
+    box-shadow: var(--shadow-lg), 0 0 40px rgba(45, 95, 50, 0.1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Device Camera Notch */
+.smartphone-notch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 24px;
+    background: #1a1a24;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+    z-index: 100;
+}
+
+/* Phone Screen Scrollable Content */
+.smartphone-screen {
+    flex-grow: 1;
+    background: var(--bg-dark);
+    overflow-y: auto;
+    padding: 30px 16px 20px;
+    font-family: var(--font-body);
+    color: #fff;
+    scrollbar-width: none;
+}
+
+.smartphone-screen::-webkit-scrollbar {
+    display: none;
+}
+
+/* Mock Mini-Site Inner Styles */
+.mini-site-header {
+    text-align: center;
+    margin-bottom: 24px;
+    margin-top: 10px;
+}
+.mini-site-header h3 {
+    font-size: 1.4rem;
+    color: var(--primary);
+}
+.mini-site-header p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+.mini-site-hero-img {
+    width: 100%;
+    height: 140px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, hsla(45, 95%, 50%, 0.1), hsla(150, 80%, 40%, 0.1));
+    border: 1px solid var(--border-color);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+.mini-site-section-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--secondary);
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 4px;
+}
+.mini-site-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+.mini-site-item-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+}
+.mini-site-hours-block {
+    background: var(--bg-card);
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 24px;
+}
+.mini-site-booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+.mini-site-booking-form input, .mini-site-booking-form button {
+    font-size: 0.8rem;
+    padding: 10px;
+    border-radius: var(--radius-sm);
+}
+
+/* Presentation Slide Deck Slider */
+.presentation-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.slides-wrapper {
+    position: relative;
+    min-height: 380px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: var(--shadow-lg);
+}
+
+.presentation-slide-item {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.presentation-slide-item.active {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100%;
+}
+
+.slide-number-lbl {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.slide-content-title {
+    font-size: 2.2rem;
+    line-height: 1.2;
+}
+
+.slide-content-body {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    margin-top: 10px;
+    line-height: 1.7;
+}
+
+.slide-bullet-points {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style-type: none;
+}
+
+.slide-bullet-points li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+}
+
+.slide-bullet-points li::before {
+    content: "✨";
+    color: var(--primary);
+}
+
+.presentation-slider-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+}
+
+.deck-pagination-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.dot-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border-color);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.dot-indicator.active {
+    background: var(--primary);
+    width: 24px;
+    border-radius: 10px;
+}
+
+/* Video Reels Storyboard Timeline */
+.storyboard-timeline-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.storyboard-scene-card {
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+@media (max-width: 768px) {
+    .storyboard-scene-card {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+}
+
+.scene-index-badge {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background: var(--primary-glow);
+    border: 1px solid var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1.1rem;
+}
+
+.scene-detail-box h4 {
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+    color: var(--primary);
+}
+
+.scene-detail-box p {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.scene-audio-cue {
+    background: hsla(240, 10%, 2%, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+}
+
+.scene-audio-cue h5 {
+    font-size: 0.85rem;
+    color: var(--secondary);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.scene-audio-cue p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+/* Scheduler & Channel Connector Calendar */
+.scheduler-connectors-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+}
+
+@media (max-width: 992px) {
+    .scheduler-connectors-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.social-channel-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    margin-bottom: 12px;
+}
+
+/* Calendar Grid */
+.calendar-grid-container {
+    width: 100%;
+}
+
+.calendar-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.calendar-month-name {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.calendar-days-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+}
+
+.calendar-days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.calendar-cell-day {
+    aspect-ratio: 1;
+    border: 1px solid var(--border-color);
+    background: var(--bg-deep);
+    border-radius: var(--radius-sm);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: var(--transition);
+    position: relative;
+    cursor: pointer;
+}
+
+.calendar-cell-day:hover {
+    border-color: var(--primary);
+    background: var(--bg-card);
+}
+
+.calendar-cell-day.other-month {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.calendar-date-number {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.calendar-cell-day:hover .calendar-date-number {
+    color: var(--primary);
+}
+
+.calendar-events-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    overflow-y: auto;
+    max-height: calc(100% - 18px);
+}
+
+.calendar-event-indicator {
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 2px 4px;
+    border-radius: 3px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.event-poster {
+    background: var(--primary-glow);
+    color: var(--primary);
+    border: 1px solid hsla(45, 95%, 50%, 0.25);
+}
+
+.event-video {
+    background: var(--secondary-glow);
+    color: var(--secondary);
+    border: 1px solid hsla(150, 80%, 40%, 0.25);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Global processing overlay for AI operations */
+.processing-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 10000;
+    display: none; /* Controlled dynamically */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    backdrop-filter: blur(8px);
+}
+
+.spinner-glow {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--border-color);
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    box-shadow: var(--glow-primary);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

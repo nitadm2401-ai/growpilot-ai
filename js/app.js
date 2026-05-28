@@ -1,427 +1,569 @@
-// Core UI Controller for GrowPilot AI
-let activeAudit = null;
-let activeModal = null;
+// Central UI Controller for GrowthAura AI Dashboard
+let activeTab = "dashboard";
+let currentSlideIndex = 0;
+let generatedSlides = [];
+let generatedReels = [];
+let posterCount = 0;
+let reelCount = 0;
 
-// Initialize on load
-window.addEventListener('load', () => {
-    // Load config state
-    BrandManager.loadApiKey();
-    const cachedAudit = BrandManager.loadAuditResult();
-    
-    // Set API Key field in settings modal
-    document.getElementById('settings-api-key-input').value = BrandManager.geminiKey;
-
-    if (cachedAudit) {
-        // Direct route to report if audited previously
-        activeAudit = cachedAudit;
-        showView('report');
-        renderAuditReport(cachedAudit);
-    } else {
-        showView('landing');
+// Initialize app on load
+document.addEventListener("DOMContentLoaded", () => {
+    // Populate settings key
+    const savedKey = BrandManager.loadApiKey();
+    const keyInput = document.getElementById("settings-api-key-input");
+    if (keyInput && savedKey) {
+        keyInput.value = savedKey;
     }
+
+    // Populate Brand Kit inputs from saved profile
+    syncBrandKitInputs();
+
+    // Render Calendar
+    renderCalendar();
+
+    // Render Initial UI text updates
+    updateUISnapshots();
 });
 
-// Navigation scroll helpers
-function scrollToSection(sectionId) {
-    const el = document.getElementById(sectionId);
-    if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-    }
+// Sync input fields from BrandManager profile state
+function syncBrandKitInputs() {
+    const profile = BrandManager.brandProfile;
+    document.getElementById("brand-name").value = profile.name;
+    document.getElementById("brand-loc").value = profile.location;
+    document.getElementById("brand-logo").value = profile.logo;
+    document.getElementById("brand-color").value = profile.themeColor;
+    document.getElementById("brand-niche").value = profile.niche;
+    document.getElementById("brand-contact").value = profile.contact;
+    document.getElementById("brand-hours").value = profile.hours;
+    document.getElementById("brand-language").value = profile.language;
+    document.getElementById("brand-services").value = profile.services;
 }
 
-// Reset app back to landing homepage
+// Update UI copy details everywhere based on active profile state
+function updateUISnapshots() {
+    const profile = BrandManager.brandProfile;
+
+    // Sidebar
+    document.getElementById("sidebar-logo-emoji").innerText = profile.logo;
+    document.getElementById("sidebar-brand-title").innerText = profile.name;
+    document.getElementById("sidebar-brand-lang-badge").innerText = profile.language;
+
+    // Dashboard overview
+    document.getElementById("dash-welcome-name").innerText = profile.name;
+    document.getElementById("stat-posters-cnt").innerText = posterCount;
+    document.getElementById("stat-reels-cnt").innerText = reelCount;
+    document.getElementById("stat-calendar-cnt").innerText = BrandManager.scheduledEvents.length;
+
+    // Poster canvas headers
+    document.getElementById("poster-brand-logo").innerText = profile.logo;
+    document.getElementById("poster-brand-name").innerText = profile.name;
+    document.getElementById("poster-brand-loc").innerText = "📍 " + profile.location;
+
+    // Mini-site panel summaries
+    document.getElementById("web-meta-headline").innerText = "Aapki Apni " + profile.name;
+    document.getElementById("web-meta-tagline").innerText = "Trusted in " + profile.location;
+    
+    const servicesCount = profile.services.split(",").length;
+    document.getElementById("web-meta-services").innerText = `${servicesCount} Items compiled`;
+    document.getElementById("web-meta-hours").innerText = profile.hours;
+}
+
+// Route between landing and dashboard workspace
+function launchWorkspace() {
+    document.getElementById("view-landing").style.display = "none";
+    document.getElementById("view-workspace").style.display = "flex";
+    document.getElementById("nav-workspace-btn").innerText = "Workspace Dashboard";
+    document.getElementById("nav-workspace-btn").onclick = () => switchWorkspaceTab('dashboard');
+    document.getElementById("main-footer").style.display = "none";
+    switchWorkspaceTab("dashboard");
+}
+
 function resetToHome() {
-    activeAudit = null;
-    localStorage.removeItem('growpilot_last_audit');
-    
-    // Clear input fields
-    document.getElementById('input-biz-name').value = "";
-    document.getElementById('input-biz-loc').value = "";
-    
-    showView('landing');
+    document.getElementById("view-landing").style.display = "flex";
+    document.getElementById("view-workspace").style.display = "none";
+    document.getElementById("nav-workspace-btn").innerText = "Launch Workspace";
+    document.getElementById("nav-workspace-btn").onclick = launchWorkspace;
+    document.getElementById("main-footer").style.display = "block";
 }
 
-// View switcher router
-function showView(viewName) {
-    document.getElementById('view-landing').style.display = viewName === 'landing' ? 'block' : 'none';
-    document.getElementById('view-scanner').style.display = viewName === 'scanner' ? 'flex' : 'none';
-    document.getElementById('view-report').style.display = viewName === 'report' ? 'block' : 'none';
-    
-    // Adjust header button visibility
-    const headerBtn = document.querySelector('.landing-header .btn-primary');
-    if (headerBtn) {
-        headerBtn.style.display = viewName === 'landing' ? 'inline-flex' : 'none';
+// Scroll to section on landing page
+function scrollToSection(sectionId) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
     }
 }
 
-// Run GMB Audit Scanner Radar Animation
-function triggerAuditScan() {
-    const bizName = document.getElementById('input-biz-name').value;
-    const bizLoc = document.getElementById('input-biz-loc').value;
-
-    if (!bizName || bizName.trim() === "") {
-        Scheduler.triggerNotification("Please enter a Business Name to scan!");
-        return;
-    }
-
-    // Switch view to Scanner
-    showView('scanner');
-
-    // Scanning status log timeline simulation
-    const logs = [
-        "Locating Google Map registries and coordinates...",
-        "Fetching citation listings and NAP consistency details...",
-        "Reading customer review counts and sentiment ratios...",
-        "Analyzing local search keyword competition ranking densities...",
-        "Compiling checklist optimization score report..."
-    ];
-
-    const logLbl = document.getElementById('scanner-log-lbl');
-    let logIdx = 0;
-
-    const interval = setInterval(() => {
-        if (logIdx < logs.length) {
-            logLbl.textContent = logs[logIdx];
-            logIdx++;
-        } else {
-            clearInterval(interval);
-            // Execute actual audit calculations
-            const result = Auditor.runGmbAudit(bizName, bizLoc);
-            activeAudit = result;
-            BrandManager.saveAuditResult(result);
-            
-            // Switch view to Report
-            showView('report');
-            renderAuditReport(result);
-        }
-    }, 700);
-}
-
-// Render Google Audit report dashboard
-function renderAuditReport(audit) {
-    // 1. Set headers
-    document.getElementById('report-biz-name').textContent = audit.name;
-    document.getElementById('report-biz-loc').textContent = audit.location || "Local Area";
-    document.getElementById('sidebar-rating').textContent = `${audit.rating} / 5.0`;
-    document.getElementById('sidebar-reviews').textContent = `${audit.totalReviews} reviews`;
-    document.getElementById('sidebar-photos').textContent = `${audit.photoCount} photos`;
-
-    // 2. Animate Circular Score Dial Gauge
-    const circle = document.getElementById('score-dial-circle');
-    const scoreVal = audit.score;
-    const percentLbl = document.getElementById('score-percentage-lbl');
+// Switch Sidebar tabs
+function switchWorkspaceTab(tabId) {
+    activeTab = tabId;
     
-    // Total path length of radius 65 circle is 2 * PI * r = ~408.4
-    const circumference = 408.4;
-    const offset = circumference - (scoreVal / 100) * circumference;
-    
-    circle.style.strokeDashoffset = circumference; // reset first
-    percentLbl.textContent = "0%";
-    
-    // Trigger count-up animation
-    setTimeout(() => {
-        circle.style.strokeDashoffset = offset;
-        
-        let counter = 0;
-        const speed = Math.max(10, 800 / scoreVal);
-        const timer = setInterval(() => {
-            if (counter < scoreVal) {
-                counter++;
-                percentLbl.textContent = counter + "%";
-            } else {
-                clearInterval(timer);
-            }
-        }, speed);
-    }, 200);
-
-    // 3. Set assessment grade badge
-    const badge = document.getElementById('score-grade-badge');
-    badge.className = "badge";
-    if (scoreVal >= 75) {
-        badge.classList.add('badge-success');
-        badge.textContent = "Optimized";
-    } else if (scoreVal >= 60) {
-        badge.classList.add('badge-warning');
-        badge.textContent = "Needs Growth";
-    } else {
-        badge.classList.add('badge-danger');
-        badge.textContent = "Critical Attention";
-    }
-
-    // 4. Render Task rows
-    renderTaskChecklistRows(audit);
-}
-
-// Draw list tasks with action buttons
-function renderTaskChecklistRows(audit) {
-    const criticalContainer = document.getElementById('critical-tasks-container');
-    const warningContainer = document.getElementById('warning-tasks-container');
-    const completedContainer = document.getElementById('completed-tasks-container');
-
-    criticalContainer.innerHTML = "";
-    warningContainer.innerHTML = "";
-    completedContainer.innerHTML = "";
-
-    // Show/Hide groups based on count
-    document.getElementById('card-critical-group').style.display = audit.criticalFixes.length === 0 ? 'none' : 'block';
-    document.getElementById('card-warning-group').style.display = audit.warningFixes.length === 0 ? 'none' : 'block';
-
-    // A. Render Critical
-    audit.criticalFixes.forEach(task => {
-        const row = document.createElement('div');
-        row.className = "checklist-row-item";
-        row.innerHTML = `
-            <div class="task-item-description">
-                <span class="task-severity-icon">🔴</span>
-                <div class="task-text-body">
-                    <h4>${task.title}</h4>
-                    <p>${task.desc}</p>
-                </div>
-            </div>
-            <button class="btn btn-primary" onclick="launchAIAction('${task.id}')">${task.actionText}</button>
-        `;
-        criticalContainer.appendChild(row);
+    // Toggle active sidebar link
+    document.querySelectorAll(".sidebar-menu .menu-item").forEach(item => {
+        item.classList.remove("active");
     });
+    const activeMenuItem = document.getElementById(`tab-${tabId}`);
+    if (activeMenuItem) {
+        activeMenuItem.classList.add("active");
+    }
 
-    // B. Render Warnings
-    audit.warningFixes.forEach(task => {
-        const row = document.createElement('div');
-        row.className = "checklist-row-item";
-        row.innerHTML = `
-            <div class="task-item-description">
-                <span class="task-severity-icon">🟡</span>
-                <div class="task-text-body">
-                    <h4>${task.title}</h4>
-                    <p>${task.desc}</p>
-                </div>
-            </div>
-            <button class="btn btn-secondary" onclick="launchAIAction('${task.id}')">${task.actionText}</button>
-        `;
-        warningContainer.appendChild(row);
+    // Toggle active content pane
+    document.querySelectorAll(".workspace-content-pane .workspace-view").forEach(pane => {
+        pane.classList.remove("active");
     });
+    const activePane = document.getElementById(`pane-${tabId}`);
+    if (activePane) {
+        activePane.classList.add("active");
+    }
 
-    // C. Render Good
-    audit.completedItems.forEach(task => {
-        const row = document.createElement('div');
-        row.className = "checklist-row-item";
-        row.innerHTML = `
-            <div class="task-item-description">
-                <span class="task-severity-icon">💚</span>
-                <div class="task-text-body">
-                    <h4>${task.title}</h4>
-                    <p>${task.desc}</p>
-                </div>
-            </div>
-            <span class="badge badge-success" style="padding: 6px 12px; font-size: 0.65rem;">Pass</span>
-        `;
-        completedContainer.appendChild(row);
-    });
-}
-
-// Router for opening modal tasks
-function launchAIAction(taskId) {
-    if (taskId === 'gmb_posts' || taskId === 'gmb_photos') {
-        openModalWindow('modal-gmb-post');
-        generatePostAction(); // auto-trigger initial post write
-    } else if (taskId === 'gmb_replies') {
-        openModalWindow('modal-gmb-reviews');
-        populateReviewsStack();
-    } else if (taskId === 'gmb_keywords') {
-        openModalWindow('modal-gmb-keywords');
-        generateKeywordsAction();
+    // Specially re-render calendar when calendar tab opens
+    if (tabId === "calendar") {
+        renderCalendar();
     }
 }
 
-// Modal controller functions
-function openModalWindow(modalId) {
-    closeActiveModal();
-    activeModal = document.getElementById(modalId);
-    if (activeModal) activeModal.classList.add('active');
+// Processing HUD loaders
+function showLoader(text) {
+    const banner = document.getElementById("global-processing-banner");
+    const loaderText = document.getElementById("global-loader-text");
+    loaderText.innerText = text || "AI engine compiling localized assets...";
+    banner.style.display = "flex";
+}
+
+function hideLoader() {
+    document.getElementById("global-processing-banner").style.display = "none";
+}
+
+// Modals management
+function openSettingsModal() {
+    document.getElementById("modal-settings").style.display = "flex";
 }
 
 function closeActiveModal() {
-    if (activeModal) {
-        activeModal.classList.remove('active');
-        activeModal = null;
-    }
-}
-
-// Processing banner controls
-function toggleLoadingBanner(show) {
-    const banner = document.getElementById('global-processing-banner');
-    if (banner) {
-        if (show) banner.classList.add('active');
-        else banner.classList.remove('active');
-    }
-}
-
-// Modal A Actions: Write GMB Post
-async function generatePostAction() {
-    if (!activeAudit) return;
-    
-    const textarea = document.getElementById('modal-post-textarea');
-    textarea.value = "AI post writer is thinking...";
-    toggleLoadingBanner(true);
-
-    const tone = document.getElementById('post-tone-select').value;
-
-    try {
-        const postText = await ContentGenerator.generateGMBPost(
-            activeAudit.name,
-            activeAudit.location,
-            activeAudit.niche,
-            tone
-        );
-        textarea.value = postText;
-    } catch (err) {
-        console.error(err);
-        textarea.value = "Failed to generate GMB post.";
-    } finally {
-        toggleLoadingBanner(false);
-    }
-}
-
-function copyPostText() {
-    const val = document.getElementById('modal-post-textarea').value;
-    navigator.clipboard.writeText(val);
-    Scheduler.triggerNotification("Copied GMB post text to clipboard!");
-}
-
-// Modal B Actions: Reviews Responder
-// Niche-specific review generation database
-const nicheReviews = {
-    restaurant: [
-        "Food was delicious but the service was slow. Took 25 minutes to get our bill.",
-        "Excellent organic ingredients! The pizza crust is crispy and toppings are fresh.",
-        "Worst customer service. Nobody picked up my phone calls for delivery reservation."
-    ],
-    gym: [
-        "Equipment is good but the gym gets very crowded during peak hours (6-8 PM).",
-        "Great atmosphere! Coaches are extremely friendly and weight sections are clean.",
-        "Staff was rude and didn't explain the subscription details properly when onboarding."
-    ],
-    ecommerce: [
-        "Material quality is great but shipping took a week to arrive at my address.",
-        "The everyday backpack is waterproof and spacious. Fully worth the price!",
-        "Item arrived with a damaged zip. Need replacement but response is slow."
-    ],
-    "real-estate": [
-        "Agent was late for the farmhouse listing showing, but the property tour was good.",
-        "Very professional real estate agency. Found us the perfect home in a week!",
-        "They set the listing valuation too high and we had zero offers for a month."
-    ],
-    saas: [
-        "App works well but would love it if there was a direct Instagram autopost.",
-        "Amazing local ranking features! Our map ranking went from #9 to #2 in 3 weeks.",
-        "Interface is slightly confusing. Took some time to find GMB review responders."
-    ]
-};
-
-function populateReviewsStack() {
-    const container = document.getElementById('mock-reviews-stack');
-    container.innerHTML = "";
-    
-    if (!activeAudit) return;
-    const niche = activeAudit.niche || "saas";
-    const reviews = nicheReviews[niche] || nicheReviews["saas"];
-    
-    reviews.forEach((review, idx) => {
-        const isNegative = review.toLowerCase().includes("slow") || 
-                           review.toLowerCase().includes("worst") || 
-                           review.toLowerCase().includes("rude") || 
-                           review.toLowerCase().includes("damaged") ||
-                           review.toLowerCase().includes("confusing") ||
-                           review.toLowerCase().includes("high");
-
-        const card = document.createElement('div');
-        card.className = "glass-panel";
-        card.style.padding = "16px";
-        card.style.display = "flex";
-        card.style.flexDirection = "column";
-        card.style.gap = "10px";
-        card.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div style="font-size: 0.82rem; font-weight: 700; color: var(--secondary);">Reviewer #${idx + 1}</div>
-                <span class="badge ${isNegative ? 'badge-danger' : 'badge-success'}">${isNegative ? 'Negative' : 'Positive'}</span>
-            </div>
-            <p style="font-size: 0.85rem; font-style: italic; color: #fff;">"${review}"</p>
-            <button class="btn btn-secondary" style="font-size: 0.72rem; padding: 6px 12px; align-self: flex-end;" onclick="generateSingleReviewReply('${idx}', \`${review.replace(/`/g, '\\`').replace(/'/g, "\\'")}\`)">Write Reply with AI</button>
-        `;
-        container.appendChild(card);
+    document.querySelectorAll(".modal-overlay").forEach(modal => {
+        modal.style.display = "none";
     });
 }
 
-async function generateSingleReviewReply(idx, reviewText) {
-    if (!activeAudit) return;
-    
-    const textarea = document.getElementById('modal-reply-textarea');
-    textarea.value = "AI responder is writing reply...";
-    toggleLoadingBanner(true);
-
-    try {
-        const replyText = await ContentGenerator.generateGMBReply(
-            activeAudit.name,
-            activeAudit.location,
-            activeAudit.niche,
-            reviewText
-        );
-        textarea.value = replyText;
-    } catch (err) {
-        console.error(err);
-        textarea.value = "Failed to generate reply.";
-    } finally {
-        toggleLoadingBanner(false);
-    }
-}
-
-function copyReplyText() {
-    const val = document.getElementById('modal-reply-textarea').value;
-    navigator.clipboard.writeText(val);
-    Scheduler.triggerNotification("Copied review reply response!");
-}
-
-// Modal C Actions: Suggest Keywords
-async function generateKeywordsAction() {
-    if (!activeAudit) return;
-    
-    const input = document.getElementById('modal-keywords-input');
-    input.value = "AI suggestions loading...";
-    toggleLoadingBanner(true);
-
-    try {
-        const keywordsList = await ContentGenerator.generateLocalKeywords(
-            activeAudit.name,
-            activeAudit.location,
-            activeAudit.niche
-        );
-        input.value = keywordsList;
-    } catch (err) {
-        console.error(err);
-        input.value = "Failed to suggest keywords.";
-    } finally {
-        toggleLoadingBanner(false);
-    }
-}
-
-function copyKeywordsText() {
-    const val = document.getElementById('modal-keywords-input').value;
-    navigator.clipboard.writeText(val);
-    Scheduler.triggerNotification("Copied keywords list to clipboard!");
-}
-
-// Settings modal functions
-function openSettingsModal() {
-    openModalWindow('modal-settings');
-}
-
 function saveSettings() {
-    const keyInput = document.getElementById('settings-api-key-input').value;
-    BrandManager.saveApiKey(keyInput);
-    Scheduler.triggerNotification("Google Gemini API configuration saved successfully!");
+    const key = document.getElementById("settings-api-key-input").value;
+    BrandManager.saveApiKey(key);
     closeActiveModal();
+    alert("Google Gemini API configuration saved successfully!");
+}
+
+// Handle Brand Kit Form Submit
+function handleBrandFormSubmit(event) {
+    event.preventDefault();
     
-    // Refresh content if audit reports exist
-    if (activeAudit) {
-        renderAuditReport(activeAudit);
+    const updatedProfile = {
+        name: document.getElementById("brand-name").value,
+        location: document.getElementById("brand-loc").value,
+        logo: document.getElementById("brand-logo").value,
+        themeColor: document.getElementById("brand-color").value,
+        niche: document.getElementById("brand-niche").value,
+        contact: document.getElementById("brand-contact").value,
+        hours: document.getElementById("brand-hours").value,
+        language: document.getElementById("brand-language").value,
+        services: document.getElementById("brand-services").value
+    };
+
+    BrandManager.saveBrandProfile(updatedProfile);
+    updateUISnapshots();
+    alert("Brand Kit profile successfully synchronized!");
+    switchWorkspaceTab("dashboard");
+}
+
+// --- AI POSTER CANVAS ACTIONS ---
+
+// Apply color background gradients based on select choices
+function applyPosterPresetStyle() {
+    const preset = document.getElementById("poster-style-preset").value;
+    const canvas = document.getElementById("live-poster-element");
+
+    if (preset === "gold-dark") {
+        canvas.style.background = "linear-gradient(135deg, #1f1f2e 0%, #000000 100%)";
+        canvas.style.borderColor = "var(--primary)";
+    } else if (preset === "emerald-glow") {
+        canvas.style.background = "linear-gradient(135deg, #052615 0%, #000000 100%)";
+        canvas.style.borderColor = "var(--secondary)";
+    } else if (preset === "royal-purple") {
+        canvas.style.background = "linear-gradient(135deg, #250938 0%, #040108 100%)";
+        canvas.style.borderColor = "#9d4edd";
+    } else if (preset === "festive-red") {
+        canvas.style.background = "linear-gradient(135deg, #480607 0%, #050000 100%)";
+        canvas.style.borderColor = "#e63946";
+    } else if (preset === "sunset-orange") {
+        canvas.style.background = "linear-gradient(135deg, #3d1b04 0%, #000000 100%)";
+        canvas.style.borderColor = "#f77f00";
     }
+}
+
+// Call AI generation for posters
+async function triggerPosterGeneration() {
+    showLoader("Generating localized poster caption using Gemini...");
+    
+    try {
+        const result = await ContentGenerator.generateAIPoster(BrandManager.brandProfile);
+        document.getElementById("poster-caption-overlay").innerText = result;
+        posterCount++;
+        updateUISnapshots();
+    } catch (err) {
+        console.error(err);
+        alert("Failed to build poster text overlay.");
+    } finally {
+        hideLoader();
+    }
+}
+
+// Typography sliders override
+function updateLivePosterText() {
+    const font = document.getElementById("poster-font-select").value;
+    const color = document.getElementById("poster-text-color").value;
+    const size = document.getElementById("poster-font-size").value;
+
+    const overlay = document.getElementById("poster-caption-overlay");
+    overlay.style.fontFamily = font;
+    overlay.style.color = color;
+    overlay.style.fontSize = size + "rem";
+}
+
+// Download poster mock
+function downloadPosterImage() {
+    const text = document.getElementById("poster-caption-overlay").innerText;
+    
+    // Simulate image compiler download
+    const blob = new Blob([`GrowthAura AI Creative Banner File\n---------------------------------\nBrand: ${BrandManager.brandProfile.name}\nLocation: ${BrandManager.brandProfile.location}\nCaption Text:\n${text}`], { type: "text/plain;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "growthaura_poster_banner.txt";
+    link.click();
+    
+    alert("Graphic Poster Canvas compiled successfully! File downloaded as 'growthaura_poster_banner.txt'.");
+}
+
+function schedulePosterEvent() {
+    const text = document.getElementById("poster-caption-overlay").innerText;
+    openAddEventModal(`Poster: ${text.substring(0, 20)}...`, "poster");
+}
+
+// --- AI REELS STORYBOARDER ACTIONS ---
+
+// Trigger Reel generation
+async function triggerReelsGeneration() {
+    showLoader("Directing reel scenes and script transcripts...");
+    const container = document.getElementById("reels-storyboard-flow-container");
+    container.innerHTML = "";
+
+    try {
+        const scenes = await ContentGenerator.generateReelStoryboard(BrandManager.brandProfile);
+        generatedReels = scenes;
+
+        scenes.forEach(scene => {
+            const card = document.createElement("div");
+            card.className = "glass-panel storyboard-scene-card";
+            card.innerHTML = `
+                <div class="scene-index-badge">#${scene.scene}</div>
+                <div class="scene-detail-box">
+                    <h4>🎬 Scene Action Visual</h4>
+                    <p>${scene.visual}</p>
+                </div>
+                <div class="scene-audio-cue">
+                    <h5>🎙️ Voiceover Transcript (${BrandManager.brandProfile.language})</h5>
+                    <p>"${scene.audio}"</p>
+                    <div style="margin-top: 10px; font-size: 0.72rem; color: var(--primary);">
+                        🎵 Audio Advice: ${scene.music}
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        reelCount++;
+        updateUISnapshots();
+        document.getElementById("reels-action-footer").style.display = "flex";
+    } catch (err) {
+        console.error(err);
+        container.innerHTML = `<div style="color: var(--accent-danger); text-align: center;">Failed to compile video scenes outline.</div>`;
+    } finally {
+        hideLoader();
+    }
+}
+
+function scheduleReelsEvent() {
+    const topic = document.getElementById("reels-topic-input").value || "Business Reel Campaign";
+    openAddEventModal(`Reel: ${topic.substring(0, 20)}...`, "video");
+}
+
+// --- INSTANT MINI-WEBSITE BUILDER ---
+
+async function compileMiniWebsite() {
+    showLoader("Writing site code assets and styling simulator...");
+    const viewport = document.getElementById("smartphone-content-viewport");
+    viewport.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding-top: 150px;">Compiling styles...</div>`;
+
+    try {
+        const webData = await ContentGenerator.generateMiniSite(BrandManager.brandProfile);
+
+        // Build list of services
+        let servicesHTML = "";
+        webData.services.forEach(s => {
+            servicesHTML += `
+                <div class="mini-site-item-row" style="display: flex; justify-content: space-between; font-size: 0.82rem; padding: 6px 0; border-bottom: 1px dashed rgba(255,255,255,0.15);">
+                    <span style="color: #fff; font-weight: 500;">✓ ${s.name}</span>
+                    <strong style="color: var(--primary);">${s.cost}</strong>
+                </div>
+            `;
+        });
+
+        const activeThemeColor = BrandManager.brandProfile.themeColor || "#d4af37";
+
+        viewport.innerHTML = `
+            <div style="--site-theme: ${activeThemeColor};">
+                <div class="mini-site-header" style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 2.2rem; margin-bottom: 8px;">${BrandManager.brandProfile.logo}</div>
+                    <h3 style="font-family: var(--font-heading); color: var(--site-theme); margin: 0 0 4px; font-size: 1.25rem;">${webData.headline}</h3>
+                    <p style="font-size: 0.75rem; color: #a0a0b0; margin: 0; font-style: italic;">${webData.tagline}</p>
+                </div>
+
+                <div class="mini-site-hero-img" style="border-radius: 8px; background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.1); padding: 12px; font-size: 0.78rem; line-height: 1.4; color: #e0e0e0; margin-bottom: 20px; text-align: center;">
+                    ${webData.about}
+                </div>
+
+                <div class="mini-site-section-title" style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--site-theme); margin-bottom: 10px; border-bottom: 2px solid var(--site-theme); padding-bottom: 3px;">
+                    Our Services / Products
+                </div>
+                <div class="mini-site-items-list" style="margin-bottom: 24px;">
+                    ${servicesHTML}
+                </div>
+
+                <div class="mini-site-hours-block" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 10px; border-radius: 6px; margin-bottom: 20px; font-size: 0.75rem;">
+                    ⏰ <strong>Timing:</strong> ${webData.hours}
+                </div>
+
+                <div class="mini-site-section-title" style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--site-theme); margin-bottom: 10px; border-bottom: 2px solid var(--site-theme); padding-bottom: 3px;">
+                    Contact & Booking
+                </div>
+                <div style="font-size: 0.75rem; color: #a0a0b0; margin-bottom: 12px;">
+                    📞 ${webData.contact}
+                </div>
+
+                <!-- Interactive Appt Form inside viewport -->
+                <form id="viewport-booking-form" onsubmit="handleSimulatorBooking(event)" style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                    <input type="text" placeholder="Enter Your Name" required style="width: 100%; background: #000; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 8px; color: #fff; font-size: 0.75rem;">
+                    <input type="tel" placeholder="Mobile Number" required style="width: 100%; background: #000; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 8px; color: #fff; font-size: 0.75rem;">
+                    <button type="submit" style="width: 100%; background: var(--site-theme); color: #000; font-weight: 700; border: none; border-radius: 4px; padding: 8px; cursor: pointer; font-size: 0.75rem; transition: 0.2s;">
+                        Confirm Appointment Booking
+                    </button>
+                </form>
+                <div id="booking-success-message" style="display: none; background: rgba(20, 150, 80, 0.2); border: 1px solid var(--secondary); border-radius: 6px; padding: 10px; text-align: center; color: var(--secondary); font-size: 0.75rem; margin-top: 10px;">
+                    🎉 Appointment Booked! Confirmation SMS sent.
+                </div>
+            </div>
+        `;
+    } catch (err) {
+        console.error(err);
+        viewport.innerHTML = `<div style="color: var(--accent-danger); text-align: center; padding-top: 150px;">Failed to compile.</div>`;
+    } finally {
+        hideLoader();
+    }
+}
+
+// Handle Form Submission within simulated smartphone view
+function handleSimulatorBooking(event) {
+    event.preventDefault();
+    document.getElementById("viewport-booking-form").style.display = "none";
+    document.getElementById("booking-success-message").style.display = "block";
+}
+
+// --- AI PRESENTATION DECK ACTIONS ---
+
+async function triggerPresentationDeckGeneration() {
+    showLoader("Writing slide text deck and formatting layouts...");
+    currentSlideIndex = 0;
+    
+    try {
+        const slides = await ContentGenerator.generatePresentation(BrandManager.brandProfile);
+        generatedSlides = slides;
+
+        // Render slides
+        const wrapper = document.getElementById("deck-slides-wrapper");
+        wrapper.innerHTML = "";
+
+        slides.forEach((slide, idx) => {
+            const slideDiv = document.createElement("div");
+            slideDiv.className = `presentation-slide-item ${idx === 0 ? 'active' : ''}`;
+            slideDiv.id = `slide-deck-${idx}`;
+            slideDiv.innerHTML = `
+                <span class="slide-number-lbl">Slide ${idx + 1} of 3</span>
+                <h2 class="slide-content-title" style="color: var(--primary); font-family: var(--font-heading);">${slide.title}</h2>
+                <ul class="slide-bullet-points" style="margin-top: 20px; font-family: var(--font-body);">
+                    <li style="font-size: 1.05rem; margin-bottom: 12px; line-height: 1.6;">${slide.bullet1}</li>
+                    <li style="font-size: 1.05rem; margin-bottom: 12px; line-height: 1.6;">${slide.bullet2}</li>
+                    <li style="font-size: 1.05rem; margin-bottom: 12px; line-height: 1.6;">${slide.bullet3}</li>
+                </ul>
+            `;
+            wrapper.appendChild(slideDiv);
+        });
+
+        // Enable buttons
+        document.getElementById("deck-prev-btn").disabled = false;
+        document.getElementById("deck-next-btn").disabled = false;
+        
+        updateSlidePagerDots();
+    } catch (err) {
+        console.error(err);
+        alert("Failed to build pitch slides.");
+    } finally {
+        hideLoader();
+    }
+}
+
+function renderActiveSlide() {
+    document.querySelectorAll(".presentation-slide-item").forEach((slide, idx) => {
+        if (idx === currentSlideIndex) {
+            slide.classList.add("active");
+        } else {
+            slide.classList.remove("active");
+        }
+    });
+    updateSlidePagerDots();
+}
+
+function updateSlidePagerDots() {
+    const dotsContainer = document.getElementById("deck-pager-dots");
+    dotsContainer.innerHTML = "";
+    
+    for (let i = 0; i < 3; i++) {
+        const dot = document.createElement("span");
+        dot.className = `dot-indicator ${i === currentSlideIndex ? 'active' : ''}`;
+        dot.onclick = () => jumpToSlide(i);
+        dotsContainer.appendChild(dot);
+    }
+}
+
+function jumpToSlide(index) {
+    if (generatedSlides.length === 0) return;
+    currentSlideIndex = index;
+    renderActiveSlide();
+}
+
+function slideNavNext() {
+    if (currentSlideIndex < 2) {
+        currentSlideIndex++;
+        renderActiveSlide();
+    }
+}
+
+function slideNavPrevious() {
+    if (currentSlideIndex > 0) {
+        currentSlideIndex--;
+        renderActiveSlide();
+    }
+}
+
+// --- CALENDAR SCHEDULER ACTIONS ---
+
+function renderCalendar() {
+    const grid = document.getElementById("calendar-cells-stack");
+    if (!grid) return;
+    grid.innerHTML = "";
+
+    // Month details (Simulate May 2026 for demonstration)
+    // May 2026 starts on Friday (Day index 5), has 31 days
+    const startDayOffset = 5;
+    const daysInMonth = 31;
+    const prevMonthDays = 30; // April
+
+    // Render preceding month padding cells
+    for (let i = prevMonthDays - startDayOffset + 1; i <= prevMonthDays; i++) {
+        const cell = document.createElement("div");
+        cell.className = "calendar-cell-day other-month";
+        cell.innerHTML = `<span class="calendar-date-number">${i}</span>`;
+        grid.appendChild(cell);
+    }
+
+    // Render active month cells
+    for (let day = 1; day <= daysInMonth; day++) {
+        const cellDateString = `2026-05-${day.toString().padStart(2, '0')}`;
+        
+        const cell = document.createElement("div");
+        cell.className = "calendar-cell-day";
+        cell.onclick = () => openAddEventModal("", "", cellDateString);
+        
+        // Find matching events scheduled on this day
+        const events = BrandManager.scheduledEvents.filter(e => e.date === cellDateString);
+        let eventsHTML = "";
+        
+        events.forEach(e => {
+            const cls = e.type === "poster" ? "event-poster" : (e.type === "video" ? "event-video" : "event-other");
+            const icon = e.type === "poster" ? "🎨" : (e.type === "video" ? "🎬" : "📝");
+            eventsHTML += `
+                <div class="calendar-event-indicator ${cls}" title="${e.title}">
+                    ${icon} ${e.title}
+                </div>
+            `;
+        });
+
+        cell.innerHTML = `
+            <span class="calendar-date-number">${day}</span>
+            <div class="calendar-events-stack">
+                ${eventsHTML}
+            </div>
+        `;
+        
+        grid.appendChild(cell);
+    }
+
+    // Render succeeding month padding cells
+    const totalRendered = startDayOffset + daysInMonth;
+    const nextPadding = 42 - totalRendered;
+    for (let i = 1; i <= nextPadding; i++) {
+        const cell = document.createElement("div");
+        cell.className = "calendar-cell-day other-month";
+        cell.innerHTML = `<span class="calendar-date-number">${i}</span>`;
+        grid.appendChild(cell);
+    }
+}
+
+// Scheduling dialog forms
+function openAddEventModal(preTitle = "", preType = "", preDate = "") {
+    const modal = document.getElementById("modal-schedule-event");
+    modal.style.display = "flex";
+
+    document.getElementById("schedule-title-input").value = preTitle;
+    
+    if (preType) {
+        document.getElementById("schedule-type-select").value = preType;
+    }
+    
+    // Set date input value
+    const dateInput = document.getElementById("schedule-date-input");
+    if (preDate) {
+        dateInput.value = preDate;
+    } else {
+        // Default to today in format YYYY-MM-DD
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        dateInput.value = `${yyyy}-${mm}-${dd}`;
+    }
+}
+
+function handleNewEventSchedule() {
+    const title = document.getElementById("schedule-title-input").value;
+    const date = document.getElementById("schedule-date-input").value;
+    const type = document.getElementById("schedule-type-select").value;
+
+    if (!title || !date) {
+        alert("Please complete the event title and date fields.");
+        return;
+    }
+
+    BrandManager.addScheduledEvent(date, title, type);
+    closeActiveModal();
+    renderCalendar();
+    updateUISnapshots();
+    alert(`Successfully scheduled your post '${title}' on ${date}!`);
 }

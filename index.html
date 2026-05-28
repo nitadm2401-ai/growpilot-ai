@@ -3,410 +3,719 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GrowPilot AI - Rank #1 on Google Maps & Autopilot Local SEO</title>
+    <title>GrowthAura AI - Indianized AI Marketing Suite for MSMEs & Creators</title>
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/design_system.css">
     <link rel="stylesheet" href="css/landing.css">
-    <link rel="stylesheet" href="css/audit.css">
+    <link rel="stylesheet" href="css/workspace.css">
 </head>
 <body>
 
-    <!-- Sticky Navbar -->
+    <!-- Global Sticky Navbar -->
     <header class="landing-header">
         <div class="logo-block" onclick="resetToHome()">
             <div class="logo-icon-svg">
                 <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 3.8L18.4 18H5.6L12 5.8z"/></svg>
             </div>
-            <div class="gradient-text glowing-text">GrowPilot AI</div>
+            <div class="gradient-text">GrowthAura AI</div>
         </div>
         <nav>
             <ul class="nav-links">
-                <li class="nav-link-item" onclick="scrollToSection('features')">Features</li>
+                <li class="nav-link-item" onclick="scrollToSection('features')">Studios</li>
                 <li class="nav-link-item" onclick="scrollToSection('pricing')">Pricing</li>
                 <li class="nav-link-item" onclick="scrollToSection('testimonials')">Success Stories</li>
             </ul>
         </nav>
         <div style="display: flex; align-items: center; gap: 12px;">
             <button class="btn btn-secondary" onclick="openSettingsModal()" style="padding: 10px 14px;">⚙️ API Settings</button>
-            <button class="btn btn-primary" onclick="scrollToSection('hero')">Scan Business</button>
+            <button id="nav-workspace-btn" class="btn btn-primary" onclick="launchWorkspace()">Launch Workspace</button>
         </div>
     </header>
 
-    <div class="container-landing">
-
-        <!-- 1. LANDING PAGE VIEW -->
-        <div id="view-landing" style="width: 100%; display: block;">
+    <!-- 1. LANDING PAGE VIEW -->
+    <div id="view-landing" class="container-landing" style="display: flex;">
+        
+        <!-- Hero Area -->
+        <section class="hero-section" id="hero">
+            <span class="badge badge-primary">🇮🇳 Specially Crafted for Indian MSMEs & Creators</span>
+            <h1>Supercharge Your Business With<br><span class="gradient-text">AI Marketing Studios</span></h1>
+            <p>One affordable subscription replaces expensive designers and social managers. Generate poster graphics, video reels storyboard, custom mini-websites, and presentations in Hinglish, Hindi, or English.</p>
             
-            <!-- Hero Area -->
-            <section class="hero-section" id="hero">
-                <h1>Rank <span class="gradient-text glowing-text">#1 on Google Maps</span>.<br>Get 3x More Local Customers.</h1>
-                <p>Onboard your local business, scan your Google Maps listing score, and use Gemini-powered AI tools to automate weekly posts, review responses, and keywords density.</p>
+            <div class="hero-buttons-row">
+                <button class="btn btn-primary" onclick="launchWorkspace()">Launch Workspace Free</button>
+                <button class="btn btn-secondary" onclick="scrollToSection('features')">Explore Studios</button>
+            </div>
+
+            <!-- Sleek Mockup Widget -->
+            <div class="glass-panel" style="width: 100%; max-width: 850px; padding: 20px; border-radius: var(--radius-lg); margin-top: 30px; box-shadow: var(--glow-primary);">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 15px;">
+                    <div style="display: flex; gap: 8px;">
+                        <span style="width: 10px; height: 10px; border-radius: 50%; background: #ff5f56;"></span>
+                        <span style="width: 10px; height: 10px; border-radius: 50%; background: #ffbd2e;"></span>
+                        <span style="width: 10px; height: 10px; border-radius: 50%; background: #27c93f;"></span>
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--text-dark); letter-spacing: 0.1em; text-transform: uppercase;">Workspace Preview</div>
+                    <div style="width: 30px;"></div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 20px; text-align: left;">
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="font-weight: 700; font-size: 0.95rem; color: var(--primary);">Sharma Chemist & Druggist</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">📍 Karelibaug, Vadodara</div>
+                        <div style="background: hsla(240,10%,20%,0.3); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; font-size: 0.72rem; line-height: 1.4;">
+                            <span style="color: var(--secondary); font-weight: 700;">Hinglish AI Poster Caption:</span><br>
+                            Bimar hain? Pharmacy ki line se bacho! 💊 Sharma Chemist se order karein prescribed medicines! Delivery ke liye call karein +91 98765 43210!
+                        </div>
+                    </div>
+                    <div style="border: 1px solid var(--border-color); border-radius: 8px; height: 120px; background: linear-gradient(135deg, #181c26, #0e1017); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px;">
+                        <span style="font-size: 1.8rem;">🎨</span>
+                        <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em;">AI Poster Canvas Engine Active</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trust-banner-ticker">
+                ⭐️ Empowering 10,000+ local pharmacies, salons, kirana stores, cafes, and builders in India.
+            </div>
+        </section>
+
+        <!-- Features/Studios Section -->
+        <section class="features-section-block" id="features">
+            <div class="features-header-title">
+                <h2>Five Powerful AI Studios Under One Roof</h2>
+                <p>GrowthAura handles your visual, text, web, and presentation campaigns automatically.</p>
+            </div>
+            <div class="features-grid-cards">
+                <div class="glass-panel feature-item-card">
+                    <div class="feature-card-icon">🎨</div>
+                    <h3>AI Poster Canvas</h3>
+                    <p>Generate marketing posters with customized typography, localized captions, and themes tailored for Indian festivals, discounts, or daily campaigns.</p>
+                </div>
+                <div class="glass-panel feature-item-card">
+                    <div class="feature-card-icon">🎬</div>
+                    <h3>Reels & Video Storyboarder</h3>
+                    <p>Plan viral short videos easily. Receive scene outline descriptions, background sound/music cues, and high-engagement voiceover scripts in Hindi or Hinglish.</p>
+                </div>
+                <div class="glass-panel feature-item-card">
+                    <div class="feature-card-icon">📱</div>
+                    <h3>Instant Mini-Websites</h3>
+                    <p>Compile a beautiful responsive business portal (with services list, prices, contact call-to-actions, and hours) instantly and preview it in a simulated smartphone.</p>
+                </div>
+                <div class="glass-panel feature-item-card">
+                    <div class="feature-card-icon">📊</div>
+                    <h3>AI Presentation Decks</h3>
+                    <p>Convert your Brand Kit into a highly professional 3-slide pitch presentation slides, complete with core values, offerings list, and call-to-actions.</p>
+                </div>
+                <div class="glass-panel feature-item-card">
+                    <div class="feature-card-icon">📅</div>
+                    <h3>Social Scheduler</h3>
+                    <p>Plot generated campaigns directly onto a calendar timeline and manage mock social channel integrations in a single unified dashboard view.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials-section-block" id="testimonials">
+            <div class="features-header-title">
+                <h2>Growth Stories From Local Business Owners</h2>
+                <p>See how Indian entrepreneurs are saving up to ₹25,000 every month in design and marketing fees.</p>
+            </div>
+            <div class="testimonial-grid-cards">
+                <div class="glass-panel testimonial-item-card">
+                    <div class="testimonial-rating-row">★★★★★</div>
+                    <p class="testimonial-quote-text">"Pehle design banwane ke liye graphic designer ke चक्कर kaatne padte the. Now, with GrowthAura, I can generate Hinglish posters for my cafe and post them directly! Saved me massive time."</p>
+                    <div class="testimonial-user-profile">
+                        <div class="testimonial-avatar">AK</div>
+                        <div class="testimonial-user-info">
+                            <h4>Amit Kapoor</h4>
+                            <p>Bistro 7 Café, Vadodara</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-panel testimonial-item-card">
+                    <div class="testimonial-rating-row">★★★★★</div>
+                    <p class="testimonial-quote-text">"The Mini-Website builder is a game-changer! My pharmacy menu and free home delivery booking form got online in just 10 seconds. Highly recommended for small shops."</p>
+                    <div class="testimonial-user-profile">
+                        <div class="testimonial-avatar">SP</div>
+                        <div class="testimonial-user-info">
+                            <h4>Sharma Pharmacy</h4>
+                            <p>Karelibaug, Vadodara</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Indianized Pricing Grid -->
+        <section class="pricing-section-block" id="pricing">
+            <div class="features-header-title">
+                <h2>Transparent Pricing Tailored For Growth</h2>
+                <p>Get started for free or unlock the full power of live Gemini AI content generations.</p>
+            </div>
+            <div class="pricing-grid-cards">
                 
-                <!-- Audit Bar -->
-                <div class="audit-bar-wrapper">
-                    <div class="audit-input-container" style="border-right: 1px solid var(--border-color); padding-right: 10px;">
-                        <!-- Store Icon -->
-                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-                        <input type="text" id="input-biz-name" class="audit-field-input" placeholder="Enter Business / Shop Name" required>
+                <div class="glass-panel pricing-item-card">
+                    <div class="price-title-box">
+                        <h3>Starter Spark</h3>
+                        <p>Perfect for exploring templates and basic scheduling.</p>
                     </div>
-                    <div class="audit-input-container">
-                        <!-- Location Icon -->
-                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                        <input type="text" id="input-biz-loc" class="audit-field-input" placeholder="City or Location (e.g. Mumbai)">
-                    </div>
-                    <button class="btn btn-primary" onclick="triggerAuditScan()">Scan Listing Free</button>
-                </div>
-
-                <div class="trust-banner-ticker">
-                    ⭐️ Trusted by 5,000+ local gyms, cafes, e-commerce shops, and realtors.
-                </div>
-            </section>
-
-            <!-- Features Grid -->
-            <section class="features-section-block" id="features">
-                <div class="features-header-title">
-                    <h2>Everything You Need to Rank #1 Local</h2>
-                    <p>GrowPilot simplifies GMB SEO tasks using high-converting AI content generators.</p>
-                </div>
-                <div class="features-grid-cards">
-                    <div class="glass-panel feature-item-card">
-                        <div class="feature-card-icon">📈</div>
-                        <h3>Google Score Audit</h3>
-                        <p>Analyze your profile details against local competitors and get an actionable score optimization checklist.</p>
-                    </div>
-                    <div class="glass-panel feature-item-card">
-                        <div class="feature-card-icon">✍️</div>
-                        <h3>AI GMB Posting</h3>
-                        <p>Generate SEO-friendly weekly promotions and updates including relevant local search terms and hashtags.</p>
-                    </div>
-                    <div class="glass-panel feature-item-card">
-                        <div class="feature-card-icon">💬</div>
-                        <h3>Smart Review Reply</h3>
-                        <p>Draft keyword-dense replies to positive and negative customer reviews automatically to boost Maps authority.</p>
-                    </div>
-                    <div class="glass-panel feature-item-card">
-                        <div class="feature-card-icon">🔍</div>
-                        <h3>Keyword Optimizer</h3>
-                        <p>Find high-intent search terms that local customers use to search for shops in your niche.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Testimonials -->
-            <section class="testimonials-section-block" id="testimonials">
-                <div class="features-header-title">
-                    <h2>Hear From Business Owners</h2>
-                    <p>Real results from local brands scaling their Google Maps search rankings.</p>
-                </div>
-                <div class="testimonial-grid-cards">
-                    <div class="glass-panel testimonial-item-card">
-                        <div class="testimonial-rating-row">★★★★★</div>
-                        <p class="testimonial-quote-text">"Our pizza shop ranked #5 on Google Maps. After using GrowPilot to post weekly and respond to reviews, we are now sitting at #1. Traffic increased by 40%!"</p>
-                        <div class="testimonial-user-profile">
-                            <div class="testimonial-avatar">MS</div>
-                            <div class="testimonial-user-info">
-                                <h4>Mamma Mia Pizza</h4>
-                                <p>Mumbai, India</p>
-                            </div>
+                    <div>
+                        <div class="price-value-box">
+                            <span class="price-currency">₹</span>
+                            <span class="price-amount">0</span>
+                            <span class="price-frequency">/ month</span>
                         </div>
+                        <ul class="price-features-list">
+                            <li><span class="bullet-tick">✓</span> Standard Brand Profile setup</li>
+                            <li><span class="bullet-tick">✓</span> Indianized offline fallbacks</li>
+                            <li><span class="bullet-tick">✓</span> Static mini-website structure</li>
+                            <li><span class="bullet-tick">✓</span> Drag-and-drop poster overrides</li>
+                        </ul>
                     </div>
-                    <div class="glass-panel testimonial-item-card">
-                        <div class="testimonial-rating-row">★★★★★</div>
-                        <p class="testimonial-quote-text">"Adding keywords to our descriptions and replying to reviews took hours. GrowPilot generates SEO replies and GMB posts in 1 click."</p>
-                        <div class="testimonial-user-profile">
-                            <div class="testimonial-avatar">PT</div>
-                            <div class="testimonial-user-info">
-                                <h4>Prime Fitness Gym</h4>
-                                <p>Bangalore, India</p>
-                            </div>
-                        </div>
-                    </div>
+                    <button class="btn btn-secondary" onclick="launchWorkspace()" style="width: 100%;">Get Started Free</button>
                 </div>
-            </section>
 
-            <!-- Pricing Grid -->
-            <section class="pricing-section-block" id="pricing">
-                <div class="features-header-title">
-                    <h2>Transparent Plans for Every Business</h2>
-                    <p>Start scanning for free, upgrade as you grow your local customer base.</p>
-                </div>
-                <div class="pricing-grid-cards">
-                    <div class="glass-panel pricing-item-card">
-                        <div class="price-title-box">
-                            <h3>Starter Scan</h3>
-                            <p>For new local businesses checking their score.</p>
-                        </div>
-                        <div>
-                            <div class="price-value-box">
-                                <span class="price-amount">$0</span>
-                                <span class="price-frequency">/ forever</span>
-                            </div>
-                            <ul class="price-features-list">
-                                <li>✔️ Free GMB Score Scan</li>
-                                <li>✔️ Core Audit Checklist</li>
-                                <li>✔️ Offline template fallback tools</li>
-                            </ul>
-                        </div>
-                        <button class="btn btn-secondary" onclick="scrollToSection('hero')" style="width: 100%;">Get Started</button>
+                <div class="glass-panel pricing-item-card popular-tier">
+                    <div class="popular-ribbon">POPULAR</div>
+                    <div class="price-title-box">
+                        <h3>GrowthAura Pro</h3>
+                        <p>Complete autopilot AI creation tools for MSMEs & agencies.</p>
                     </div>
-
-                    <div class="glass-panel pricing-item-card popular-tier">
-                        <div class="popular-ribbon">POPULAR</div>
-                        <div class="price-title-box">
-                            <h3>GrowPilot Pro</h3>
-                            <p>Best for ranking #1 and automating customer interactions.</p>
+                    <div>
+                        <div class="price-value-box">
+                            <span class="price-currency">₹</span>
+                            <span class="price-amount">499</span>
+                            <span class="price-frequency">/ month</span>
                         </div>
-                        <div>
-                            <div class="price-value-box">
-                                <span class="price-amount">$19</span>
-                                <span class="price-frequency">/ month</span>
-                            </div>
-                            <ul class="price-features-list">
-                                <li>✔️ Unlimited GMB Score Scans</li>
-                                <li>✔️ Live Google Gemini AI tools</li>
-                                <li>✔️ SEO Keyword suggestions generator</li>
-                                <li>✔️ Priority Maps positioning checker</li>
-                            </ul>
-                        </div>
-                        <button class="btn btn-primary" onclick="scrollToSection('hero')" style="width: 100%;">Go Pro Now</button>
+                        <ul class="price-features-list">
+                            <li><span class="bullet-tick">✓</span> Unlimited live Gemini 1.5 Flash updates</li>
+                            <li><span class="bullet-tick">✓</span> Localized Hindi, Hinglish, & English support</li>
+                            <li><span class="bullet-tick">✓</span> Smart smartphone mini-website host</li>
+                            <li><span class="bullet-tick">✓</span> AI 3-Slide pitch deck slides builder</li>
+                            <li><span class="bullet-tick">✓</span> Social calendar scheduler events</li>
+                        </ul>
                     </div>
+                    <button class="btn btn-primary" onclick="launchWorkspace()" style="width: 100%;">Go Pro Today</button>
                 </div>
-            </section>
 
-        </div>
-
-        <!-- 2. SCANNING LOADER VIEW -->
-        <div id="view-scanner" class="audit-scanner-viewport">
-            <div class="radar-sweep-container">
-                <div class="radar-ring radar-ring-1"></div>
-                <div class="radar-ring radar-ring-2"></div>
-                <div class="radar-ring radar-ring-3"></div>
-                <!-- Interactive blinking targets -->
-                <div class="radar-scanner-blip" style="top: 30px; left: 45px; animation-delay: 0.2s;"></div>
-                <div class="radar-scanner-blip" style="top: 110px; left: 130px; animation-delay: 0.7s;"></div>
-                <div class="radar-scanner-blip" style="top: 80px; left: 20px; animation-delay: 1.1s;"></div>
             </div>
-            <div>
-                <h3 class="scanner-status-text gradient-text">Auditing Google Maps Listing...</h3>
-                <p class="scanner-details-log" id="scanner-log-lbl">Locating brand coordinates...</p>
-            </div>
-        </div>
+        </section>
 
-        <!-- 3. AUDIT REPORT VIEW -->
-        <div id="view-report" class="audit-report-viewport">
-            
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px;">
+    </div>
+
+    <!-- 2. APP DASHBOARD WORKSPACE (SPA) -->
+    <div id="view-workspace" class="app-workspace-container" style="display: none;">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="workspace-sidebar">
+            <div style="padding: 10px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 8px;">
+                <span id="sidebar-logo-emoji" style="font-size: 1.4rem;">💊</span>
                 <div>
-                    <h2 id="report-biz-name" class="gradient-text">Royal Spice Cafe</h2>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;" id="report-biz-loc">Mumbai, India</p>
+                    <h4 id="sidebar-brand-title" style="font-size: 0.92rem; color: #fff;">Sharma Pharmacy</h4>
+                    <span id="sidebar-brand-lang-badge" class="badge badge-success" style="font-size: 0.55rem; padding: 2px 6px;">Hinglish</span>
                 </div>
-                <button class="btn btn-secondary" onclick="resetToHome()">← Scan New Business</button>
             </div>
+            <ul class="sidebar-menu">
+                <li id="tab-dashboard" class="menu-item active" onclick="switchWorkspaceTab('dashboard')">
+                    <span class="menu-item-icon">📊</span> Overview
+                </li>
+                <li id="tab-brand" class="menu-item" onclick="switchWorkspaceTab('brand')">
+                    <span class="menu-item-icon">⚙️</span> Brand Kit Settings
+                </li>
+                <li id="tab-posters" class="menu-item" onclick="switchWorkspaceTab('posters')">
+                    <span class="menu-item-icon">🎨</span> AI Poster Studio
+                </li>
+                <li id="tab-reels" class="menu-item" onclick="switchWorkspaceTab('reels')">
+                    <span class="menu-item-icon">🎬</span> Video Reels Creator
+                </li>
+                <li id="tab-minisite" class="menu-item" onclick="switchWorkspaceTab('minisite')">
+                    <span class="menu-item-icon">📱</span> Mini-Website Builder
+                </li>
+                <li id="tab-decks" class="menu-item" onclick="switchWorkspaceTab('decks')">
+                    <span class="menu-item-icon">📇</span> AI Pitch Decks
+                </li>
+                <li id="tab-calendar" class="menu-item" onclick="switchWorkspaceTab('calendar')">
+                    <span class="menu-item-icon">📅</span> Scheduler Calendar
+                </li>
+            </ul>
+            <div style="margin-top: auto; padding-top: 20px;">
+                <button class="btn btn-secondary" onclick="resetToHome()" style="width: 100%; font-size: 0.8rem; padding: 10px 14px;">← Back to Home</button>
+            </div>
+        </aside>
 
-            <div class="report-split-grid">
+        <!-- Main Content Area -->
+        <main class="workspace-content-pane">
+            
+            <!-- A. Dashboard Overview Tab -->
+            <div id="pane-dashboard" class="workspace-view active">
+                <div class="view-header">
+                    <h2>Welcome back, <span id="dash-welcome-name">Sharma Pharmacy</span>!</h2>
+                    <p>Here is your localized GrowthAura AI suite dashboard status snapshot.</p>
+                </div>
                 
-                <!-- Left: Score Circle widget -->
-                <div class="glass-panel report-sidebar-score">
-                    <h3>Google Search Score</h3>
-                    
-                    <div class="score-circle-dial">
-                        <svg width="150" height="150">
-                            <circle cx="75" cy="75" r="65" class="score-circle-track-bg"></circle>
-                            <circle cx="75" cy="75" r="65" class="score-circle-fill-bar" id="score-dial-circle" stroke-dasharray="408.4" stroke-dashoffset="408.4"></circle>
-                        </svg>
-                        <div class="score-percentage-value" id="score-percentage-lbl">0%</div>
+                <div class="dashboard-grid">
+                    <div class="glass-panel stat-card">
+                        <span class="stat-label">AI Posters Created</span>
+                        <div class="stat-value" id="stat-posters-cnt">0</div>
                     </div>
-
-                    <span class="badge badge-danger" id="score-grade-badge">Needs Attention</span>
-
-                    <div class="score-quick-insights">
-                        <div class="insight-metric-row">
-                            <span style="color: var(--text-muted);">GMB Maps Rating</span>
-                            <strong id="sidebar-rating">4.2 / 5.0</strong>
-                        </div>
-                        <div class="insight-metric-row">
-                            <span style="color: var(--text-muted);">Total Reviews</span>
-                            <strong id="sidebar-reviews">34 reviews</strong>
-                        </div>
-                        <div class="insight-metric-row">
-                            <span style="color: var(--text-muted);">Uploaded Photos</span>
-                            <strong id="sidebar-photos">6 photos</strong>
-                        </div>
+                    <div class="glass-panel stat-card">
+                        <span class="stat-label">Reel Storyboards</span>
+                        <div class="stat-value" id="stat-reels-cnt">0</div>
+                    </div>
+                    <div class="glass-panel stat-card">
+                        <span class="stat-label">Mini-Website Status</span>
+                        <div class="stat-value" style="color: var(--secondary);">Active</div>
+                    </div>
+                    <div class="glass-panel stat-card">
+                        <span class="stat-label">Scheduled Event Slots</span>
+                        <div class="stat-value" id="stat-calendar-cnt">0</div>
                     </div>
                 </div>
 
-                <!-- Right: Task checklist -->
-                <div class="report-tasks-checklist">
-                    
-                    <!-- Group 1: Critical Fixes -->
-                    <div class="glass-panel checklist-group-card" id="card-critical-group">
-                        <h3 class="checklist-group-title" style="color: var(--accent-danger);">
-                            <span>❌</span> Critical Fixes Needed
-                        </h3>
-                        <div class="checklist-items-stack" id="critical-tasks-container">
-                            <!-- Populated dynamically via JS -->
-                        </div>
+                <div class="glass-panel" style="padding: 30px; border-radius: var(--radius-lg); margin-top: 20px;">
+                    <h3 style="margin-bottom: 12px; color: var(--primary);">Quick Start Creator Shortcuts</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px;">Click any tool below to launch the respective studio directly.</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                        <button class="btn btn-secondary" onclick="switchWorkspaceTab('posters')" style="padding: 20px; font-direction: column; gap: 8px;">
+                            <span style="font-size: 1.5rem;">🎨</span> Create AI Poster
+                        </button>
+                        <button class="btn btn-secondary" onclick="switchWorkspaceTab('reels')" style="padding: 20px; font-direction: column; gap: 8px;">
+                            <span style="font-size: 1.5rem;">🎬</span> Plan Viral Reel
+                        </button>
+                        <button class="btn btn-secondary" onclick="switchWorkspaceTab('minisite')" style="padding: 20px; font-direction: column; gap: 8px;">
+                            <span style="font-size: 1.5rem;">📱</span> Compile Mini-Site
+                        </button>
+                        <button class="btn btn-secondary" onclick="switchWorkspaceTab('decks')" style="padding: 20px; font-direction: column; gap: 8px;">
+                            <span style="font-size: 1.5rem;">📇</span> Build Slide Deck
+                        </button>
                     </div>
-
-                    <!-- Group 2: Warning optimizations -->
-                    <div class="glass-panel checklist-group-card" id="card-warning-group">
-                        <h3 class="checklist-group-title" style="color: var(--accent-warning);">
-                            <span>⚠️</span> Optimization Opportunities
-                        </h3>
-                        <div class="checklist-items-stack" id="warning-tasks-container">
-                            <!-- Populated dynamically via JS -->
-                        </div>
-                    </div>
-
-                    <!-- Group 3: Good Checklist -->
-                    <div class="glass-panel checklist-group-card">
-                        <h3 class="checklist-group-title" style="color: var(--primary);">
-                            <span>✅</span> Successful Benchmarks
-                        </h3>
-                        <div class="checklist-items-stack" id="completed-tasks-container">
-                            <!-- Populated dynamically via JS -->
-                        </div>
-                    </div>
-
                 </div>
-
             </div>
 
-        </div>
+            <!-- B. Brand Kit Settings Tab -->
+            <div id="pane-brand" class="workspace-view">
+                <div class="view-header">
+                    <h2>Configure Brand Kit</h2>
+                    <p>Enter your business profile parameters. The AI uses this data to tailor Hinglish and Hindi copy.</p>
+                </div>
+                
+                <div class="glass-panel" style="max-width: 800px; padding: 40px; border-radius: var(--radius-lg);">
+                    <form id="brand-kit-form" onsubmit="handleBrandFormSubmit(event)" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        
+                        <div class="form-group">
+                            <label class="form-label">Business / Shop Name</label>
+                            <input type="text" id="brand-name" class="form-control" placeholder="e.g. Sharma Pharmacy" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Location (Area, City)</label>
+                            <input type="text" id="brand-loc" class="form-control" placeholder="e.g. Karelibaug, Vadodara" required>
+                        </div>
 
+                        <div class="form-group">
+                            <label class="form-label">Logo Emoji</label>
+                            <select id="brand-logo" class="form-control">
+                                <option value="💊">💊 Pharmacy / Medic</option>
+                                <option value="🏪">🏪 Kirana / General Store</option>
+                                <option value="☕">☕ Cafe / Tea Shop</option>
+                                <option value="✂️">✂️ Salon / Spa</option>
+                                <option value="🏋️">🏋️ Gym / Fitness</option>
+                                <option value="👗">👗 Boutique / Fashion</option>
+                                <option value="🍔">🍔 Restaurant / Food</option>
+                                <option value="💻">💻 IT / Startup</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Primary Color Theme</label>
+                            <input type="color" id="brand-color" class="form-control" style="padding: 4px; height: 50px;" value="#d4af37">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Business Category / Niche</label>
+                            <input type="text" id="brand-niche" class="form-control" placeholder="e.g. Chemist & Pharmacy Store" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Contact Call/WhatsApp Number</label>
+                            <input type="text" id="brand-contact" class="form-control" placeholder="e.g. +91 98765 43210" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Operational Timings</label>
+                            <input type="text" id="brand-hours" class="form-control" placeholder="e.g. 09:00 AM - 10:00 PM" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">AI Output Language Tone</label>
+                            <select id="brand-language" class="form-control">
+                                <option value="Hinglish">Hinglish (Hindi written in English alphabets)</option>
+                                <option value="Hindi">हिन्दी (Pure Hindi script)</option>
+                                <option value="English">English (Global professional tone)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label class="form-label">Services / Products Offered (comma-separated list)</label>
+                            <textarea id="brand-services" class="form-control" style="min-height: 80px;" placeholder="e.g. Prescription Drugs, Baby Care, Diagnostics, Health supplements" required></textarea>
+                        </div>
+
+                        <div style="grid-column: span 2; display: flex; justify-content: flex-end; margin-top: 10px;">
+                            <button type="submit" class="btn btn-primary">Save Brand Profile Kit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- C. AI Poster & Creative Canvas Tab -->
+            <div id="pane-posters" class="workspace-view">
+                <div class="view-header">
+                    <h2>AI Poster & Creative Canvas</h2>
+                    <p>Build stunning visual poster campaigns overlays. Choose themes, customize typography, and download the high-resolution container.</p>
+                </div>
+
+                <div class="poster-workspace-split">
+                    <!-- Left Side settings panel -->
+                    <div class="glass-panel" style="padding: 24px; display: flex; flex-direction: column; gap: 20px;">
+                        
+                        <div class="form-group">
+                            <label class="form-label">Select Canvas Theme Style</label>
+                            <select id="poster-style-preset" class="form-control" onchange="applyPosterPresetStyle()">
+                                <option value="gold-dark">Gold & Obsidian Accent</option>
+                                <option value="emerald-glow">Emerald Neon Gradient</option>
+                                <option value="royal-purple">Vibrant Royal Purple</option>
+                                <option value="festive-red">Festive Crimson Red</option>
+                                <option value="sunset-orange">Sunset Orange Glow</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Overlay Caption Theme / Idea</label>
+                            <input type="text" id="poster-topic-input" class="form-control" placeholder="e.g. Monsoon Immunity Discount, Store opening">
+                        </div>
+
+                        <button class="btn btn-primary" onclick="triggerPosterGeneration()">Generate AI Caption</button>
+
+                        <div style="border-top: 1px solid var(--border-color); padding-top: 16px; margin-top: 8px;">
+                            <h4 style="font-size: 0.85rem; text-transform: uppercase; color: var(--text-dark); margin-bottom: 12px;">Typography Controls</h4>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Font Family Override</label>
+                                <select id="poster-font-select" class="form-control" onchange="updateLivePosterText()">
+                                    <option value="'Outfit', sans-serif">Outfit (Modern Sans)</option>
+                                    <option value="Georgia, serif">Georgia (Premium Serif)</option>
+                                    <option value="Courier New, monospace">Courier (Technical Monospace)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Text Color</label>
+                                <input type="color" id="poster-text-color" class="form-control" style="padding: 4px; height: 45px;" value="#ffffff" onchange="updateLivePosterText()">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Font Size</label>
+                                <input type="range" id="poster-font-size" min="1.2" max="2.8" step="0.1" value="1.8" class="form-control" style="padding: 0; background: transparent;" oninput="updateLivePosterText()">
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 10px; margin-top: 10px;">
+                            <button class="btn btn-secondary" style="flex-grow: 1; padding: 12px;" onclick="schedulePosterEvent()">📅 Schedule</button>
+                            <button class="btn btn-emerald" style="flex-grow: 1; padding: 12px;" onclick="downloadPosterImage()">💾 Download</button>
+                        </div>
+                    </div>
+
+                    <!-- Right Side Canvas preview panel -->
+                    <div>
+                        <div class="poster-canvas-frame">
+                            <div id="live-poster-element" class="creative-poster-canvas">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span id="poster-brand-logo" style="font-size: 1.4rem;">💊</span>
+                                    <span id="poster-brand-name" class="canvas-brand-name">Sharma Pharmacy</span>
+                                </div>
+                                <div id="poster-caption-overlay" class="canvas-main-caption">
+                                    Bimar hain? Pharmacy ki line se bacho! 💊 Delivery ke liye call karein +91 98765 43210!
+                                </div>
+                                <div class="canvas-footer-cta">
+                                    <span id="poster-brand-loc">📍 Karelibaug, Vadodara</span>
+                                    <span id="poster-brand-cta">📞 Call Now</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p style="font-size: 0.75rem; color: var(--text-dark); margin-top: 8px; text-align: center;">💡 Tip: You can download this poster graphic directly as an image file or schedule it to your social media channels calendar.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- D. Reels & Video Storyboarder Tab -->
+            <div id="pane-reels" class="workspace-view">
+                <div class="view-header">
+                    <h2>AI Video Reels Storyboarder</h2>
+                    <p>Plan visual timelines, audio cues, and voiceover scripts for Reels, YouTube Shorts, or TikTok campaigns.</p>
+                </div>
+
+                <div class="glass-panel" style="padding: 30px; margin-bottom: 30px;">
+                    <div style="display: flex; align-items: flex-end; gap: 20px;">
+                        <div class="form-group" style="flex-grow: 1; margin-bottom: 0;">
+                            <label class="form-label">Video Reel Campaign Subject / Focus</label>
+                            <input type="text" id="reels-topic-input" class="form-control" placeholder="e.g. Fast home delivery service, monsoon immunity booster kits, organic cosmetics">
+                        </div>
+                        <button class="btn btn-primary" onclick="triggerReelsGeneration()" style="height: 52px;">Generate Reels Outline</button>
+                    </div>
+                </div>
+
+                <!-- Storyboard Output Timeline -->
+                <div class="storyboard-timeline-flow" id="reels-storyboard-flow-container">
+                    <div style="text-align: center; color: var(--text-muted); padding: 40px 0;">
+                        <span>🎬 Click 'Generate Reels Outline' to compile your visual marketing story timeline cells.</span>
+                    </div>
+                </div>
+
+                <div id="reels-action-footer" style="display: none; justify-content: flex-end; margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="scheduleReelsEvent()">📅 Schedule Reel to Campaign Calendar</button>
+                </div>
+            </div>
+
+            <!-- E. Instant Mini-Website Builder Tab -->
+            <div id="pane-minisite" class="workspace-view">
+                <div class="view-header">
+                    <h2>Instant Mini-Website Builder</h2>
+                    <p>Compile a custom website containing service listings, hours, and booking forms. Inspect it inside our mock smartphone simulator.</p>
+                </div>
+
+                <div class="minisite-workspace-split">
+                    <!-- Left side configuration details -->
+                    <div class="glass-panel" style="padding: 30px; display: flex; flex-direction: column; gap: 24px;">
+                        <div>
+                            <h3 style="margin-bottom: 8px;">Active Web Components</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem;">The builder automatically compiles a fully responsive single-page landing site derived from your active Brand Kit profile configurations.</p>
+                        </div>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 0.9rem;">
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+                                <span style="color: var(--text-muted);">Website Headline</span>
+                                <strong id="web-meta-headline">Aapki Apni Sharma Pharmacy</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+                                <span style="color: var(--text-muted);">Slogan / Tagline</span>
+                                <strong id="web-meta-tagline">Trusted medicines in Karelibaug</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+                                <span style="color: var(--text-muted);">Menu Offerings</span>
+                                <strong id="web-meta-services">5 Items compiled</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+                                <span style="color: var(--text-muted);">Timings Block</span>
+                                <strong id="web-meta-hours">09:00 AM - 10:00 PM</strong>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="compileMiniWebsite()">Compile Live Mini-Website</button>
+                    </div>
+
+                    <!-- Right side mock smartphone viewer -->
+                    <div class="phone-mockup-wrapper">
+                        <div class="smartphone-device">
+                            <div class="smartphone-notch"></div>
+                            
+                            <!-- Smartphone screen content viewport -->
+                            <div id="smartphone-content-viewport" class="smartphone-screen">
+                                <div style="text-align: center; color: var(--text-muted); padding-top: 150px;">
+                                    <span style="font-size: 2.5rem; display: block; margin-bottom: 15px;">📱</span>
+                                    <span>Click 'Compile Live Mini-Website' to load site preview here.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- F. AI Presentation Deck Tab -->
+            <div id="pane-decks" class="workspace-view">
+                <div class="view-header">
+                    <h2>AI Presentation Deck Maker</h2>
+                    <p>Build a structured 3-slide pitch deck representing your business. Preview slides and click through key highlights.</p>
+                </div>
+
+                <div class="glass-panel" style="padding: 30px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h3>Generate 3-Slide Business Deck</h3>
+                        <p style="color: var(--text-muted); font-size: 0.85rem;">Convert brand value points into slides. Toggles slides using navigation dots.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="triggerPresentationDeckGeneration()">Build Presentation Deck</button>
+                </div>
+
+                <div class="presentation-container">
+                    <div class="slides-wrapper" id="deck-slides-wrapper">
+                        <div class="presentation-slide-item active" id="slide-welcome-fallback">
+                            <span class="slide-number-lbl">Slide 1: Overview</span>
+                            <h2 class="slide-content-title">Build Your Local Pitch</h2>
+                            <p class="slide-content-body">Click the "Build Presentation Deck" button above to translate your brand objectives into slides.</p>
+                            <ul class="slide-bullet-points">
+                                <li>Automatic copy drafting</li>
+                                <li>Custom details layout</li>
+                                <li>Indianized context structures</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Slide controls & pager -->
+                    <div class="presentation-slider-actions">
+                        <button class="btn btn-secondary" id="deck-prev-btn" onclick="slideNavPrevious()" style="padding: 8px 16px;" disabled>← Prev</button>
+                        <div class="deck-pagination-dots" id="deck-pager-dots">
+                            <span class="dot-indicator active" onclick="jumpToSlide(0)"></span>
+                            <span class="dot-indicator" onclick="jumpToSlide(1)"></span>
+                            <span class="dot-indicator" onclick="jumpToSlide(2)"></span>
+                        </div>
+                        <button class="btn btn-secondary" id="deck-next-btn" onclick="slideNavNext()" style="padding: 8px 16px;" disabled>Next →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- G. Scheduler Calendar Tab -->
+            <div id="pane-calendar" class="workspace-view">
+                <div class="view-header">
+                    <h2>Unified Scheduler & Calendar</h2>
+                    <p>Plot marketing events onto a monthly calendar grid. Manage mock social integrations below.</p>
+                </div>
+
+                <div class="scheduler-connectors-row">
+                    
+                    <!-- Sidebar: Channels -->
+                    <div class="glass-panel" style="padding: 24px;">
+                        <h3 style="margin-bottom: 15px; color: var(--primary);">Channel Connectors</h3>
+                        <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 20px;">Toggle social handles below to authorize mock channel scheduler synchronization.</p>
+                        
+                        <div class="social-channels-stack">
+                            <div class="social-channel-item">
+                                <div>
+                                    <strong style="display: block; font-size: 0.9rem;">📸 Instagram Profile</strong>
+                                    <span style="font-size: 0.72rem; color: var(--text-muted);">Mock Authorized</span>
+                                </div>
+                                <input type="checkbox" checked style="width: 20px; height: 20px; accent-color: var(--primary);">
+                            </div>
+                            <div class="social-channel-item">
+                                <div>
+                                    <strong style="display: block; font-size: 0.9rem;">👥 Facebook Page</strong>
+                                    <span style="font-size: 0.72rem; color: var(--text-muted);">Mock Connected</span>
+                                </div>
+                                <input type="checkbox" checked style="width: 20px; height: 20px; accent-color: var(--primary);">
+                            </div>
+                            <div class="social-channel-item">
+                                <div>
+                                    <strong style="display: block; font-size: 0.9rem;">👔 LinkedIn Page</strong>
+                                    <span style="font-size: 0.72rem; color: var(--text-muted);">Offline Mode</span>
+                                </div>
+                                <input type="checkbox" style="width: 20px; height: 20px; accent-color: var(--primary);">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Calendar Component -->
+                    <div class="glass-panel" style="padding: 30px;">
+                        <div class="calendar-grid-container">
+                            <div class="calendar-header-actions">
+                                <h3 class="calendar-month-name">May 2026</h3>
+                                <button class="btn btn-secondary" onclick="openAddEventModal()" style="font-size: 0.8rem; padding: 8px 12px;">➕ Schedule Item</button>
+                            </div>
+                            
+                            <div class="calendar-days-header">
+                                <div>Sun</div>
+                                <div>Mon</div>
+                                <div>Tue</div>
+                                <div>Wed</div>
+                                <div>Thu</div>
+                                <div>Fri</div>
+                                <div>Sat</div>
+                            </div>
+
+                            <div class="calendar-days-grid" id="calendar-cells-stack">
+                                <!-- Populated dynamically by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
     </div>
 
     <!-- MODAL OVERLAYS -->
 
-    <!-- Modal 1: GMB Post Generator -->
-    <div class="modal-overlay" id="modal-gmb-post">
-        <div class="glass-panel modal-content-window">
-            <div class="modal-header">
-                <h2>✍️ AI GMB Post Generator</h2>
-                <button class="modal-close" onclick="closeActiveModal()">×</button>
-            </div>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">
-                Write an SEO-optimized weekly update containing local keywords based on your niche.
-            </p>
-            
-            <div class="form-group">
-                <label class="form-label">Tone of voice</label>
-                <select id="post-tone-select" class="form-control">
-                    <option value="bold">Bold & Energetic (High action)</option>
-                    <option value="casual">Casual & Friendly (Relatable)</option>
-                    <option value="professional">Professional (Benefits driven)</option>
-                    <option value="witty">Witty (Clever, slight humor)</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Generated GMB Update Post</label>
-                <textarea id="modal-post-textarea" class="form-control" style="min-height: 140px;" placeholder="AI compiled post output..."></textarea>
-            </div>
-
-            <div class="modal-form-actions">
-                <button class="btn btn-secondary" onclick="closeActiveModal()">Cancel</button>
-                <button class="btn btn-secondary" onclick="generatePostAction()">🔄 Re-Write Post</button>
-                <button class="btn btn-primary" onclick="copyPostText()">📋 Copy Post</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal 2: GMB Reviews Responder -->
-    <div class="modal-overlay" id="modal-gmb-reviews">
-        <div class="glass-panel modal-content-window">
-            <div class="modal-header">
-                <h2>💬 AI Review Responder</h2>
-                <button class="modal-close" onclick="closeActiveModal()">×</button>
-            </div>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">
-                Select a customer review below to generate a tailored keyword-dense response reply.
-            </p>
-
-            <div style="display: flex; flex-direction: column; gap: 16px;" id="mock-reviews-stack">
-                <!-- Mock review cards loaded by JS -->
-            </div>
-
-            <div class="form-group" style="margin-top: 24px;">
-                <label class="form-label">Active AI Response Draft</label>
-                <textarea id="modal-reply-textarea" class="form-control" style="min-height: 100px;" placeholder="Click 'Generate Reply' on any review above..."></textarea>
-            </div>
-
-            <div class="modal-form-actions">
-                <button class="btn btn-secondary" onclick="closeActiveModal()">Close</button>
-                <button class="btn btn-primary" onclick="copyReplyText()">📋 Copy Reply</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal 3: Local SEO Keywords Suggestor -->
-    <div class="modal-overlay" id="modal-gmb-keywords">
-        <div class="glass-panel modal-content-window">
-            <div class="modal-header">
-                <h2>🔍 Local Search Keywords Finder</h2>
-                <button class="modal-close" onclick="closeActiveModal()">×</button>
-            </div>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">
-                High-intent search queries that local customers use to find businesses like yours in Google Maps.
-            </p>
-
-            <div class="form-group">
-                <label class="form-label">Recommended Local SEO Keywords</label>
-                <input type="text" id="modal-keywords-input" class="form-control" placeholder="Compiling keywords..." readonly>
-                <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">
-                    Tip: Weave these exact search terms into your GMB description and weekly posts.
-                </p>
-            </div>
-
-            <div class="modal-form-actions">
-                <button class="btn btn-secondary" onclick="closeActiveModal()">Cancel</button>
-                <button class="btn btn-secondary" onclick="generateKeywordsAction()">🔄 Refresh Queries</button>
-                <button class="btn btn-primary" onclick="copyKeywordsText()">📋 Copy Keywords</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Settings & API Config Modal -->
+    <!-- Modal 1: Settings & API Config Modal -->
     <div class="modal-overlay" id="modal-settings">
-        <div class="glass-panel modal-content-window">
-            <div class="modal-header">
+        <div class="glass-panel modal-content-window" style="max-width: 480px; padding: 30px; margin: 100px auto; position: relative;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <h2>⚙️ API Key Configurations</h2>
-                <button class="modal-close" onclick="closeActiveModal()">×</button>
+                <button onclick="closeActiveModal()" style="background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;">×</button>
             </div>
             <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">
-                Enter your Google Gemini API key to enable live AI post generators and review responders.
+                Enter your Google Gemini API key to enable live AI generated text overlays, storyboard outline vectors, slide descriptions, and structured website JSON payloads.
             </p>
             
             <div class="form-group">
                 <label class="form-label" style="color: var(--primary);">Google Gemini API Key</label>
                 <input type="password" id="settings-api-key-input" class="form-control" placeholder="AIzaSy...">
                 <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 6px; line-height: 1.4;">
-                    API keys are stored securely on your browser's local storage and are never sent to external servers. Get a free API key at <a href="https://aistudio.google.com/" target="_blank" style="text-decoration: underline; color: var(--primary);">Google AI Studio</a>.
+                    API keys are stored securely in your browser's localStorage and are never sent to external servers. Get a free API key at <a href="https://aistudio.google.com/" target="_blank" style="text-decoration: underline; color: var(--primary);">Google AI Studio</a>.
                 </p>
             </div>
 
-            <div class="modal-form-actions">
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px;">
                 <button class="btn btn-secondary" onclick="closeActiveModal()">Cancel</button>
                 <button class="btn btn-primary" onclick="saveSettings()">Save Configuration</button>
             </div>
         </div>
     </div>
 
-    <!-- Floating Processing status overlay -->
-    <div class="processing-overlay" id="global-processing-banner">
-        <div class="spinner-glow"></div>
-        <span>AI engine compiling localized assets...</span>
+    <!-- Modal 2: Schedule Event Modal -->
+    <div class="modal-overlay" id="modal-schedule-event">
+        <div class="glass-panel modal-content-window" style="max-width: 480px; padding: 30px; margin: 100px auto; position: relative;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>📅 Schedule Social Post</h2>
+                <button onclick="closeActiveModal()" style="background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;">×</button>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Post/Event Title</label>
+                <input type="text" id="schedule-title-input" class="form-control" placeholder="e.g. Morning discount offer poster" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Select Date</label>
+                <input type="date" id="schedule-date-input" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Content Creator Category</label>
+                <select id="schedule-type-select" class="form-control">
+                    <option value="poster">🎨 Graphic Banner Poster</option>
+                    <option value="video">🎬 Viral Short Reel/Shorts</option>
+                    <option value="event">📝 General Reminder/Post</option>
+                </select>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px;">
+                <button class="btn btn-secondary" onclick="closeActiveModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="handleNewEventSchedule()">Schedule Event</button>
+            </div>
+        </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="landing-footer">
-        © 2026 GrowPilot AI. Recreated based on dhanda.app reference guidelines. All rights reserved.
+    <!-- Global Processing Overlay -->
+    <div class="processing-overlay" id="global-processing-banner">
+        <div class="spinner-glow"></div>
+        <span id="global-loader-text" style="font-weight: 600; color: #fff; text-shadow: var(--glow-primary);">AI engine compiling localized assets...</span>
+    </div>
+
+    <!-- Sticky footer for landing -->
+    <footer class="landing-footer" id="main-footer">
+        © 2026 GrowthAura AI. Localized SaaS for MSMEs & Creators in India. All rights reserved.
     </footer>
 
     <!-- Core Script Modules -->
     <script src="js/brand_manager.js"></script>
-    <script src="js/auditor.js"></script>
     <script src="js/generators.js"></script>
     <script src="js/app.js"></script>
 </body>

@@ -1,32 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 :root {
-    /* Color Palette */
-    --bg-dark: hsl(222, 47%, 4%);
-    --bg-deep: hsl(222, 47%, 6%);
-    --bg-card: hsla(222, 47%, 10%, 0.6);
-    --bg-card-hover: hsla(222, 47%, 14%, 0.8);
-    --border-color: hsla(222, 47%, 16%, 0.5);
-    --border-glow: hsla(142, 70%, 45%, 0.25);
+    /* Premium Color Palette (Obsidian + Gold + Emerald) */
+    --bg-dark: hsl(240, 10%, 4%);
+    --bg-deep: hsl(240, 10%, 6%);
+    --bg-card: hsla(240, 10%, 10%, 0.7);
+    --bg-card-hover: hsla(240, 10%, 14%, 0.9);
+    --border-color: hsla(240, 8%, 20%, 0.4);
+    --border-glow: hsla(45, 95%, 50%, 0.25);
     
-    /* Accents (SEO growth-oriented) */
-    --primary: hsl(142, 70%, 45%); /* Emerald Green representing growth */
-    --primary-glow: hsla(142, 70%, 45%, 0.15);
-    --primary-hover: hsl(142, 70%, 55%);
+    /* Primary Accent (Gold) */
+    --primary: hsl(45, 95%, 50%); 
+    --primary-glow: hsla(45, 95%, 50%, 0.15);
+    --primary-hover: hsl(45, 95%, 60%);
     
-    --secondary: hsl(190, 95%, 45%); /* Electric Blue/Cyan for triggers */
-    --secondary-glow: hsla(190, 95%, 45%, 0.15);
-    --secondary-hover: hsl(190, 95%, 55%);
+    /* Secondary Accent (Emerald Green) */
+    --secondary: hsl(150, 80%, 40%); 
+    --secondary-glow: hsla(150, 80%, 40%, 0.15);
+    --secondary-hover: hsl(150, 80%, 50%);
 
-    --accent-success: hsl(142, 70%, 45%);
-    --accent-warning: hsl(38, 92%, 50%); /* Amber for warnings */
-    --accent-danger: hsl(350, 90%, 55%); /* Red for critical missing items */
+    --accent-gold: hsl(45, 95%, 50%);
+    --accent-emerald: hsl(150, 80%, 40%);
+    --accent-warning: hsl(38, 92%, 50%);
+    --accent-danger: hsl(350, 90%, 55%);
     --accent-danger-glow: hsla(350, 90%, 55%, 0.15);
 
     /* Text Colors */
     --text-primary: hsl(0, 0%, 100%);
-    --text-muted: hsl(222, 15%, 70%);
-    --text-dark: hsl(222, 20%, 45%);
+    --text-muted: hsl(240, 12%, 75%);
+    --text-dark: hsl(240, 10%, 50%);
 
     /* Fonts */
     --font-heading: 'Outfit', sans-serif;
@@ -36,8 +38,8 @@
     --shadow-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.5);
     --shadow-md: 0 4px 20px -4px rgba(0, 0, 0, 0.7);
     --shadow-lg: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-    --glow-primary: 0 0 20px hsla(142, 70%, 45%, 0.35);
-    --glow-secondary: 0 0 20px hsla(190, 95%, 45%, 0.3);
+    --glow-primary: 0 0 20px hsla(45, 95%, 50%, 0.35);
+    --glow-secondary: 0 0 20px hsla(150, 80%, 40%, 0.3);
 
     /* Radius & Transitions */
     --radius-sm: 8px;
@@ -72,18 +74,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-    color: var(--secondary);
+    color: var(--primary);
     text-decoration: none;
     transition: var(--transition);
 }
 
 a:hover {
-    color: var(--secondary-hover);
+    color: var(--primary-hover);
 }
 
 /* Scrollbar Customization */
 ::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
 }
 ::-webkit-scrollbar-track {
     background: var(--bg-dark);
@@ -126,11 +129,12 @@ a:hover {
     cursor: pointer;
     transition: var(--transition);
     outline: none;
+    text-decoration: none;
 }
 
 .btn-primary {
     background: linear-gradient(135deg, var(--primary), var(--primary-hover));
-    color: var(--bg-dark);
+    color: #000;
     box-shadow: var(--shadow-sm);
 }
 
@@ -147,18 +151,18 @@ a:hover {
 
 .btn-secondary:hover {
     background: var(--bg-card-hover);
-    border-color: var(--secondary);
-    color: var(--secondary);
+    border-color: var(--primary);
+    color: var(--primary);
     transform: translateY(-2px);
 }
 
-.btn-glow {
+.btn-emerald {
     background: linear-gradient(135deg, var(--secondary), var(--secondary-hover));
-    color: var(--bg-dark);
+    color: #fff;
     box-shadow: var(--shadow-sm);
 }
 
-.btn-glow:hover {
+.btn-emerald:hover {
     transform: translateY(-2px);
     box-shadow: var(--glow-secondary);
 }
@@ -179,7 +183,7 @@ a:hover {
 }
 
 .form-control {
-    background: hsla(222, 47%, 2%, 0.7);
+    background: hsla(240, 10%, 2%, 0.7);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 14px 18px;
@@ -193,6 +197,15 @@ a:hover {
     outline: none;
     border-color: var(--primary);
     box-shadow: var(--glow-primary);
+}
+
+select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    background-size: 16px;
+    padding-right: 45px;
 }
 
 /* Badges */
@@ -219,13 +232,19 @@ a:hover {
 }
 
 .badge-success {
+    background: var(--secondary-glow);
+    color: var(--secondary);
+    border: 1px solid hsla(150, 80%, 40%, 0.25);
+}
+
+.badge-primary {
     background: var(--primary-glow);
     color: var(--primary);
-    border: 1px solid hsla(142, 70%, 45%, 0.25);
+    border: 1px solid hsla(45, 95%, 50%, 0.25);
 }
 
 .gradient-text {
-    background: linear-gradient(135deg, var(--text-primary) 30%, var(--primary) 80%, var(--secondary) 100%);
+    background: linear-gradient(135deg, var(--text-primary) 30%, var(--primary) 75%, var(--secondary) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
