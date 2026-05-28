@@ -6,6 +6,14 @@ let generatedReels = [];
 let posterCount = 0;
 let reelCount = 0;
 
+// New State Variables for Advanced Creators Suite
+let activeVideoScenes = [];
+let isPlayingVideo = false;
+let videoPlaybackInterval = null;
+let videoPlaybackProgress = 0;
+let currentSceneIndex = 0;
+let activeUtterance = null;
+
 // Initialize app on load
 document.addEventListener("DOMContentLoaded", () => {
     // Populate settings key
@@ -66,6 +74,17 @@ function updateUISnapshots() {
     const servicesCount = profile.services.split(",").length;
     document.getElementById("web-meta-services").innerText = `${servicesCount} Items compiled`;
     document.getElementById("web-meta-hours").innerText = profile.hours;
+
+    // Pre-fill default topic ideas for images/videos
+    if (!document.getElementById("image-prompt-textarea").value) {
+        document.getElementById("image-prompt-textarea").value = `A clean commercial product banner advertisement for ${profile.name} located in ${profile.location}, showcasing premium ${profile.services.split(',')[0]} and items.`;
+    }
+    if (!document.getElementById("video-topic-input").value) {
+        document.getElementById("video-topic-input").value = `Express delivery of genuine prescription wellness essentials directly to your home in ${profile.location}.`;
+    }
+    if (!document.getElementById("avatar-script-idea").value) {
+        document.getElementById("avatar-script-idea").value = `Welcome customers, highlight our daily timing from ${profile.hours}, and tell them to call ${profile.contact}.`;
+    }
 }
 
 // Route between landing and dashboard workspace
@@ -84,6 +103,12 @@ function resetToHome() {
     document.getElementById("nav-workspace-btn").innerText = "Launch Workspace";
     document.getElementById("nav-workspace-btn").onclick = launchWorkspace;
     document.getElementById("main-footer").style.display = "block";
+    
+    // Stop any active avatar narration
+    if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+    }
+    stopSimulatedVideoPlayback();
 }
 
 // Scroll to section on landing page
@@ -98,6 +123,14 @@ function scrollToSection(sectionId) {
 function switchWorkspaceTab(tabId) {
     activeTab = tabId;
     
+    // Stop speaking and playing when leaving tabs
+    if (tabId !== "avatars" && window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+    }
+    if (tabId !== "videos") {
+        stopSimulatedVideoPlayback();
+    }
+
     // Toggle active sidebar link
     document.querySelectorAll(".sidebar-menu .menu-item").forEach(item => {
         item.classList.remove("active");
@@ -247,9 +280,282 @@ function schedulePosterEvent() {
     openAddEventModal(`Poster: ${text.substring(0, 20)}...`, "poster");
 }
 
-// --- AI REELS STORYBOARDER ACTIONS ---
 
-// Trigger Reel generation
+// ================= NEW CREATORS SUITE CONTROLLERS =================
+
+// --- 1. AI IMAGE STUDIO FUNCTIONS ---
+
+function triggerImageGeneration() {
+    const promptText = document.getElementById("image-prompt-textarea").value;
+    const stylePreset = document.getElementById("image-style-select").value;
+    const aspect = document.getElementById("image-aspect-select").value;
+
+    if (!promptText || promptText.trim() === "") {
+        alert("Please write a description prompt for your image creative.");
+        return;
+    }
+
+    showLoader("Loading real-time Imagen AI graphic model...");
+
+    const imageElement = document.getElementById("generated-image-element");
+    const generatedUrl = ContentGenerator.getPollinationsImageURL(promptText, stylePreset, aspect);
+
+    // Load Image in background to show smooth complete event
+    const loaderImg = new Image();
+    loaderImg.src = generatedUrl;
+    loaderImg.onload = () => {
+        imageElement.src = generatedUrl;
+        posterCount++;
+        updateUISnapshots();
+        hideLoader();
+    };
+    loaderImg.onerror = () => {
+        hideLoader();
+        alert("Error connecting to Pollinations.ai image server. Please try refreshing prompt.");
+    };
+}
+
+function downloadGeneratedImage() {
+    const img = document.getElementById("generated-image-element");
+    if (img.src.startsWith("data:")) {
+        alert("Please generate an image first.");
+        return;
+    }
+    // Open in a new tab to let user save
+    window.open(img.src, "_blank");
+}
+
+function scheduleImageEvent() {
+    const promptText = document.getElementById("image-prompt-textarea").value;
+    openAddEventModal(`Image: ${promptText.substring(0, 20)}...`, "poster");
+}
+
+// --- 2. AI VIDEO / REELS STUDIO FUNCTIONS ---
+
+async function triggerVideoTimelineGeneration() {
+    showLoader("Compiling scenes storyboard and fetching frames...");
+    stopSimulatedVideoPlayback();
+    
+    const category = document.getElementById("video-type-select").value;
+    const topic = document.getElementById("video-topic-input").value;
+    const container = document.getElementById("video-scenes-list-container");
+    container.innerHTML = "";
+
+    try {
+        const scenes = await ContentGenerator.generateVideoStoryboard(BrandManager.brandProfile, category, topic);
+        
+        // Map and load scene visual images
+        activeVideoScenes = scenes.map(s => {
+            const imgUrl = ContentGenerator.getPollinationsImageURL(s.imagePrompt, "vibrant cinematic marketing ad frame", "9:16");
+            return {
+                ...s,
+                image: imgUrl
+            };
+        });
+
+        // Render card grids
+        activeVideoScenes.forEach(scene => {
+            const card = document.createElement("div");
+            card.className = "glass-panel storyboard-scene-card";
+            card.style.padding = "16px";
+            card.innerHTML = `
+                <div style="display: flex; gap: 14px; align-items: center;">
+                    <div class="scene-index-badge" style="width: 35px; height: 35px; font-size: 0.9rem;">#${scene.scene}</div>
+                    <img src="${scene.image}" style="width: 50px; height: 80px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border-color);" alt="Scene frame">
+                    <div style="flex-grow: 1;">
+                        <h4 style="font-size: 0.9rem; margin-bottom: 3px; color: var(--primary);">${scene.visual}</h4>
+                        <p style="font-size: 0.78rem; color: #fff; margin-bottom: 2px;">🎙️ "${scene.audio}"</p>
+                        <span style="font-size: 0.65rem; color: var(--text-dark);">🎵 Sound: ${scene.music}</span>
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        // Load Scene 1 in Player Screen
+        document.getElementById("vplayer-bg").style.backgroundImage = `url('${activeVideoScenes[0].image}')`;
+        document.getElementById("vplayer-subtitles").innerText = `🎙️ ${activeVideoScenes[0].audio}`;
+        document.getElementById("vplayer-scene-num").innerText = "Scene 1/4";
+        document.getElementById("vplayer-brand-badge").innerText = BrandManager.brandProfile.name;
+        document.getElementById("vplayer-progress").style.width = "0%";
+
+        reelCount++;
+        updateUISnapshots();
+    } catch (err) {
+        console.error(err);
+        container.innerHTML = `<div style="color: var(--accent-danger); text-align: center;">Failed to compile video.</div>`;
+    } finally {
+        hideLoader();
+    }
+}
+
+function toggleSimulatedVideoPlayback() {
+    if (activeVideoScenes.length === 0) {
+        alert("Please generate video storyboards first.");
+        return;
+    }
+
+    if (isPlayingVideo) {
+        pauseSimulatedVideoPlayback();
+    } else {
+        startSimulatedVideoPlayback();
+    }
+}
+
+function startSimulatedVideoPlayback() {
+    isPlayingVideo = true;
+    document.getElementById("vplayer-play-btn").innerText = "⏸";
+    
+    videoPlaybackInterval = setInterval(() => {
+        videoPlaybackProgress += 1.5; // Tick progress speed
+        if (videoPlaybackProgress >= 100) {
+            videoPlaybackProgress = 0;
+        }
+
+        document.getElementById("vplayer-progress").style.width = videoPlaybackProgress + "%";
+        
+        // Calculate scene index based on progress (0 to 3)
+        const sceneIndex = Math.min(Math.floor((videoPlaybackProgress / 100) * 4), 3);
+        
+        // If scene updates, change visual assets in player mockup
+        if (sceneIndex !== currentSceneIndex) {
+            currentSceneIndex = sceneIndex;
+            const scene = activeVideoScenes[currentSceneIndex];
+            
+            document.getElementById("vplayer-bg").style.backgroundImage = `url('${scene.image}')`;
+            document.getElementById("vplayer-subtitles").innerText = `🎙️ ${scene.audio}`;
+            document.getElementById("vplayer-scene-num").innerText = `Scene ${currentSceneIndex + 1}/4`;
+        }
+    }, 100);
+}
+
+function pauseSimulatedVideoPlayback() {
+    isPlayingVideo = false;
+    document.getElementById("vplayer-play-btn").innerText = "▶";
+    if (videoPlaybackInterval) {
+        clearInterval(videoPlaybackInterval);
+    }
+}
+
+function stopSimulatedVideoPlayback() {
+    pauseSimulatedVideoPlayback();
+    videoPlaybackProgress = 0;
+    currentSceneIndex = 0;
+    document.getElementById("vplayer-progress").style.width = "0%";
+    document.getElementById("vplayer-subtitles").innerText = "Click the Play Button above to watch simulated video slideshow with audio transcription subtitles.";
+    document.getElementById("vplayer-scene-num").innerText = "Scene 1/4";
+    document.getElementById("vplayer-bg").style.backgroundImage = `url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22320%22 height=%22568%22%3E%3Crect width=%22320%22 height=%22568%22 fill=%22%2308080c%22/%3E%3C/svg%3E')`;
+}
+
+function scheduleVideoEvent() {
+    const topic = document.getElementById("video-topic-input").value || "Video Campaign";
+    openAddEventModal(`Video: ${topic.substring(0, 20)}...`, "video");
+}
+
+// --- 3. AI AVATAR STUDIO FUNCTIONS ---
+
+function updateAvatarImageStyle() {
+    const style = document.getElementById("avatar-model-select").value;
+    const imgElement = document.getElementById("avatar-display-image");
+    
+    showLoader("Switching avatar headshot visual...");
+
+    const avatarPrompt = `${style}, Indian ethnic headshot, smiling portrait, studio soft focus lighting, solid clean white backdrop`;
+    const generatedUrl = ContentGenerator.getPollinationsImageURL(avatarPrompt, "photorealistic", "1:1");
+
+    const loaderImg = new Image();
+    loaderImg.src = generatedUrl;
+    loaderImg.onload = () => {
+        imgElement.src = generatedUrl;
+        hideLoader();
+    };
+    loaderImg.onerror = () => {
+        hideLoader();
+        alert("Error updating avatar frame.");
+    };
+}
+
+async function triggerAvatarScriptGeneration() {
+    showLoader("Writing spokesperson vocal transcript...");
+    const idea = document.getElementById("avatar-script-idea").value;
+
+    try {
+        const script = await ContentGenerator.generateAvatarScript(BrandManager.brandProfile, idea);
+        document.getElementById("avatar-script-textarea").value = script;
+    } catch (err) {
+        console.error(err);
+        alert("Failed to compile script details.");
+    } finally {
+        hideLoader();
+    }
+}
+
+function narrateAvatarSpeech() {
+    const text = document.getElementById("avatar-script-textarea").value;
+    if (!text || text.trim() === "") {
+        alert("Please generate or input a spokesperson script first.");
+        return;
+    }
+
+    if (!window.speechSynthesis) {
+        alert("Speech synthesis is not supported on this browser version.");
+        return;
+    }
+
+    // Toggle speech
+    if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        return;
+    }
+
+    activeUtterance = new SpeechSynthesisUtterance(text);
+
+    // Apply voice settings
+    const pitch = parseFloat(document.getElementById("avatar-speech-pitch").value);
+    const rate = parseFloat(document.getElementById("avatar-speech-rate").value);
+    activeUtterance.pitch = pitch;
+    activeUtterance.rate = rate;
+
+    // Detect target language voice (Hindi/English)
+    const lang = BrandManager.brandProfile.language;
+    const voices = window.speechSynthesis.getVoices();
+    
+    if (lang === "Hindi") {
+        activeUtterance.lang = "hi-IN";
+        const hiVoice = voices.find(v => v.lang.includes("hi-IN") || v.lang.includes("hi"));
+        if (hiVoice) activeUtterance.voice = hiVoice;
+    } else {
+        // Hinglish/English default to Indian-English voice if present
+        activeUtterance.lang = "en-IN";
+        const enInVoice = voices.find(v => v.lang.includes("en-IN") || v.lang.includes("en-in"));
+        if (enInVoice) activeUtterance.voice = enInVoice;
+    }
+
+    // Visual animation callbacks
+    activeUtterance.onstart = () => {
+        document.getElementById("avatar-presenter-circle").classList.add("speaking");
+        document.getElementById("avatar-voice-waves-row").classList.add("active");
+        document.getElementById("avatar-status-label").innerHTML = "🎙️ Speaking...";
+    };
+
+    activeUtterance.onend = () => {
+        document.getElementById("avatar-presenter-circle").classList.remove("speaking");
+        document.getElementById("avatar-voice-waves-row").classList.remove("active");
+        document.getElementById("avatar-status-label").innerHTML = "Avatar Presenter: Ready";
+    };
+
+    activeUtterance.onerror = () => {
+        document.getElementById("avatar-presenter-circle").classList.remove("speaking");
+        document.getElementById("avatar-voice-waves-row").classList.remove("active");
+        document.getElementById("avatar-status-label").innerHTML = "Avatar Presenter: Ready";
+    };
+
+    window.speechSynthesis.speak(activeUtterance);
+}
+
+
+// --- 4. REELS & VIDEO STORYBOARDER (LEGACY VERSION) ---
+
 async function triggerReelsGeneration() {
     showLoader("Directing reel scenes and script transcripts...");
     const container = document.getElementById("reels-storyboard-flow-container");
@@ -470,7 +776,6 @@ function renderCalendar() {
     grid.innerHTML = "";
 
     // Month details (Simulate May 2026 for demonstration)
-    // May 2026 starts on Friday (Day index 5), has 31 days
     const startDayOffset = 5;
     const daysInMonth = 31;
     const prevMonthDays = 30; // April
@@ -542,7 +847,6 @@ function openAddEventModal(preTitle = "", preType = "", preDate = "") {
     if (preDate) {
         dateInput.value = preDate;
     } else {
-        // Default to today in format YYYY-MM-DD
         const today = new Date();
         const yyyy = today.getFullYear();
         const mm = String(today.getMonth() + 1).padStart(2, '0');

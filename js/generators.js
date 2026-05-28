@@ -26,7 +26,6 @@ const ContentGenerator = {
 
     // Utilities to clean and parse JSON blocks from Gemini responses
     cleanJSONString(str) {
-        // Strip markdown code block wrappers if present
         let cleaned = str.trim();
         if (cleaned.startsWith("```json")) {
             cleaned = cleaned.substring(7);
@@ -56,7 +55,6 @@ const ContentGenerator = {
         const lang = brand.language || "Hinglish";
 
         if (!apiKey || apiKey.trim() === "") {
-            // Offline Fallback
             const postersList = BrandManager.fallbacks[lang]?.poster || BrandManager.fallbacks["Hinglish"].poster;
             const randomIndex = Math.floor(Math.random() * postersList.length);
             return this.replacePlaceholders(postersList[randomIndex], brand);
@@ -88,56 +86,16 @@ Guidelines:
         }
     },
 
-    // 2. Generate Reels & Video Storyboard
+    // 2. Generate Reels & Video Storyboard (Legacy Poster Version)
     async generateReelStoryboard(brand) {
-        const apiKey = BrandManager.geminiKey;
         const lang = brand.language || "Hinglish";
-
-        if (!apiKey || apiKey.trim() === "") {
-            // Offline Fallback
-            const list = BrandManager.fallbacks[lang]?.storyboard || BrandManager.fallbacks["Hinglish"].storyboard;
-            return list.map(scene => ({
-                scene: scene.scene,
-                visual: this.replacePlaceholders(scene.visual, brand),
-                audio: this.replacePlaceholders(scene.audio, brand),
-                music: this.replacePlaceholders(scene.music, brand)
-            }));
-        }
-
-        const prompt = `You are a viral social media director. Create a 4-scene video/reel storyboard for the brand:
-Name: "${brand.name}"
-Location: "${brand.location}"
-Niche: "${brand.niche}"
-Services: "${brand.services}"
-
-Language: "${lang}" (Please write the audio voiceovers in ${lang}).
-
-Output MUST be a valid JSON array of exactly 4 objects. Each object must have these exact keys:
-"scene": number,
-"visual": "Description of what is happening on screen (in English)",
-"audio": "Voiceover line to speak in the scene (in ${lang})",
-"music": "Music track or sound effect suggestion"
-
-Do not write markdown, do not write code wrappers unless in a JSON block. Just output the raw JSON array.`;
-
-        try {
-            const result = await this.callGemini(prompt, apiKey);
-            const cleanText = this.cleanJSONString(result);
-            const parsed = JSON.parse(cleanText);
-            if (Array.isArray(parsed) && parsed.length > 0) {
-                return parsed;
-            }
-            throw new Error("Invalid format received");
-        } catch (err) {
-            console.error("Gemini Storyboard failed, running offline fallback.", err);
-            const list = BrandManager.fallbacks[lang]?.storyboard || BrandManager.fallbacks["Hinglish"].storyboard;
-            return list.map(scene => ({
-                scene: scene.scene,
-                visual: this.replacePlaceholders(scene.visual, brand),
-                audio: this.replacePlaceholders(scene.audio, brand),
-                music: this.replacePlaceholders(scene.music, brand)
-            }));
-        }
+        const list = BrandManager.fallbacks[lang]?.storyboard || BrandManager.fallbacks["Hinglish"].storyboard;
+        return list.map(scene => ({
+            scene: scene.scene,
+            visual: this.replacePlaceholders(scene.visual, brand),
+            audio: this.replacePlaceholders(scene.audio, brand),
+            music: this.replacePlaceholders(scene.music, brand)
+        }));
     },
 
     // 3. Generate Instant Mini-Website details
@@ -146,7 +104,6 @@ Do not write markdown, do not write code wrappers unless in a JSON block. Just o
         const lang = brand.language || "Hinglish";
 
         if (!apiKey || apiKey.trim() === "") {
-            // Offline Fallback
             const ws = BrandManager.fallbacks[lang]?.website || BrandManager.fallbacks["Hinglish"].website;
             return {
                 headline: this.replacePlaceholders(ws.headline, brand),
@@ -209,7 +166,6 @@ Do not output explanatory text. Just the JSON object.`;
         const lang = brand.language || "Hinglish";
 
         if (!apiKey || apiKey.trim() === "") {
-            // Offline Fallback
             const slides = BrandManager.fallbacks[lang]?.presentation || BrandManager.fallbacks["Hinglish"].presentation;
             return slides.map(slide => ({
                 title: this.replacePlaceholders(slide.title, brand),
@@ -238,7 +194,7 @@ Output MUST be a valid JSON array containing exactly 3 objects representing the 
   },
   {
     "title": "Slide 2 Title (in ${lang})",
-    "bullet2": "Feature 1 description (in ${lang})",
+    "bullet1": "Feature 1 description (in ${lang})",
     "bullet2": "Feature 2 description (in ${lang})",
     "bullet3": "Feature 3 description (in ${lang})"
   },
@@ -257,7 +213,6 @@ Do not write markdown, do not write commentary. Just the raw JSON block.`;
             const cleanText = this.cleanJSONString(result);
             const parsed = JSON.parse(cleanText);
             if (Array.isArray(parsed) && parsed.length === 3) {
-                // Ensure correct key access since AI sometimes makes minor key typos
                 return parsed.map(slide => {
                     const keys = Object.keys(slide);
                     const title = slide.title || slide[keys[0]] || "";
@@ -276,6 +231,122 @@ Do not write markdown, do not write commentary. Just the raw JSON block.`;
                 bullet1: this.replacePlaceholders(slide.bullet1, brand),
                 bullet2: this.replacePlaceholders(slide.bullet2, brand),
                 bullet3: this.replacePlaceholders(slide.bullet3, brand)
+            }));
+        }
+    },
+
+
+    // ================= NEW ADVANCED STUDIO GENERATORS =================
+
+    // 5. Pollinations.ai client-side image builder
+    getPollinationsImageURL(prompt, style, aspect = "1:1") {
+        let width = 512;
+        let height = 512;
+        if (aspect === "9:16") {
+            width = 360;
+            height = 640;
+        } else if (aspect === "16:9") {
+            width = 640;
+            height = 360;
+        }
+
+        const fullPrompt = `${prompt}, in style of ${style}, commercial product design, professional advertising photography, 8k resolution, photorealistic`;
+        const encoded = encodeURIComponent(fullPrompt);
+        const seed = Math.floor(Math.random() * 1000000);
+        return `https://image.pollinations.ai/prompt/${encoded}?width=${width}&height=${height}&nologo=true&seed=${seed}`;
+    },
+
+    // 6. Generate AI Avatar Spokesperson script
+    async generateAvatarScript(brand, avatarPrompt) {
+        const apiKey = BrandManager.geminiKey;
+        const lang = brand.language || "Hinglish";
+
+        if (!apiKey || apiKey.trim() === "") {
+            const template = BrandManager.fallbacks[lang]?.avatarScript || BrandManager.fallbacks["Hinglish"].avatarScript;
+            return this.replacePlaceholders(template, brand);
+        }
+
+        const prompt = `You are a scriptwriter for an AI Avatar spokesperson. Write a short promotional speech based on:
+Brand Name: "${brand.name}"
+Location: "${brand.location}"
+Category: "${brand.niche}"
+Services: "${brand.services}"
+Contact Phone: "${brand.contact}"
+Operating Hours: "${brand.hours}"
+
+User script prompt request: "${avatarPrompt}"
+
+Language Mode: "${lang}" (Write the speech script in ${lang}. If Hinglish, write Hindi in Latin script, like daily chat speech, mixing Hindi words with English terms).
+
+Guidelines:
+- Keep it under 65 words (very concise so browser SpeechSynthesis works smoothly).
+- Make it sound natural, persuasive, and retail-focused.
+- Output ONLY the speech script text. Do not add directions, introductions, or quotation wrappers.`;
+
+        try {
+            const result = await this.callGemini(prompt, apiKey);
+            return result.trim().replace(/^"|"$/g, '');
+        } catch (err) {
+            console.error("Gemini Avatar Script failed, running offline fallback.", err);
+            const template = BrandManager.fallbacks[lang]?.avatarScript || BrandManager.fallbacks["Hinglish"].avatarScript;
+            return this.replacePlaceholders(template, brand);
+        }
+    },
+
+    // 7. Generate AI Video Storyboard (Advanced multi-scene version)
+    async generateVideoStoryboard(brand, videoType, topic) {
+        const apiKey = BrandManager.geminiKey;
+        const lang = brand.language || "Hinglish";
+
+        if (!apiKey || apiKey.trim() === "") {
+            // Offline fallbacks based on type
+            const list = BrandManager.fallbacks[lang]?.videos[videoType] || BrandManager.fallbacks["Hinglish"].videos[videoType] || BrandManager.fallbacks["Hinglish"].videos.ugc;
+            return list.map(scene => ({
+                scene: scene.scene,
+                visual: this.replacePlaceholders(scene.visual, brand),
+                audio: this.replacePlaceholders(scene.audio, brand),
+                music: this.replacePlaceholders(scene.music, brand),
+                // Add a dynamic image prompt for pollinations
+                imagePrompt: `A promotional scene displaying ${brand.niche}: ${this.replacePlaceholders(scene.visual, brand)}`
+            }));
+        }
+
+        const prompt = `You are a creative video director. Create a 4-scene video script storyboard for:
+Brand Name: "${brand.name}"
+Location: "${brand.location}"
+Niche: "${brand.niche}"
+Services list: "${brand.services}"
+
+Video Category Style: "${videoType}" (Options: ugc, promo, marketing, tutorial, product)
+Reel Topic/Goal: "${topic}"
+Voiceover Language: "${lang}"
+
+Output MUST be a valid JSON array of exactly 4 objects. Each object must have these exact keys:
+"scene": number,
+"visual": "Short description of what is happening on screen in English (max 10 words)",
+"audio": "Voiceover line to be spoken in the scene (in ${lang}, max 15 words)",
+"music": "Music beat or audio cues suggestion (in English, max 5 words)",
+"imagePrompt": "A detailed, descriptive text-to-image prompt to generate a realistic background picture for this scene (in English, max 20 words)"
+
+Do not output code blocks wrappers unless in a JSON format. Just raw JSON.`;
+
+        try {
+            const result = await this.callGemini(prompt, apiKey);
+            const cleanText = this.cleanJSONString(result);
+            const parsed = JSON.parse(cleanText);
+            if (Array.isArray(parsed) && parsed.length === 4) {
+                return parsed;
+            }
+            throw new Error("Invalid video storyboard schema parsed");
+        } catch (err) {
+            console.error("Gemini Video Storyboard failed, running fallback.", err);
+            const list = BrandManager.fallbacks[lang]?.videos[videoType] || BrandManager.fallbacks["Hinglish"].videos[videoType] || BrandManager.fallbacks["Hinglish"].videos.ugc;
+            return list.map(scene => ({
+                scene: scene.scene,
+                visual: this.replacePlaceholders(scene.visual, brand),
+                audio: this.replacePlaceholders(scene.audio, brand),
+                music: this.replacePlaceholders(scene.music, brand),
+                imagePrompt: `A promotional scene displaying ${brand.niche}: ${this.replacePlaceholders(scene.visual, brand)}`
             }));
         }
     }

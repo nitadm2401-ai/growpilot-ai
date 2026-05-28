@@ -82,8 +82,8 @@
         <!-- Features/Studios Section -->
         <section class="features-section-block" id="features">
             <div class="features-header-title">
-                <h2>Five Powerful AI Studios Under One Roof</h2>
-                <p>GrowthAura handles your visual, text, web, and presentation campaigns automatically.</p>
+                <h2>Eight Powerful AI Studios Under One Roof</h2>
+                <p>GrowthAura handles your visual, text, web, video, and spokesperson campaigns automatically.</p>
             </div>
             <div class="features-grid-cards">
                 <div class="glass-panel feature-item-card">
@@ -92,9 +92,19 @@
                     <p>Generate marketing posters with customized typography, localized captions, and themes tailored for Indian festivals, discounts, or daily campaigns.</p>
                 </div>
                 <div class="glass-panel feature-item-card">
-                    <div class="feature-card-icon">🎬</div>
-                    <h3>Reels & Video Storyboarder</h3>
-                    <p>Plan viral short videos easily. Receive scene outline descriptions, background sound/music cues, and high-engagement voiceover scripts in Hindi or Hinglish.</p>
+                    <div class="feature-card-icon">🖼️</div>
+                    <h3>AI Image Studio</h3>
+                    <p>Create actual high-converting promotional photos and commercial graphics dynamically based on descriptive prompts and style presets.</p>
+                </div>
+                <div class="glass-panel feature-item-card">
+                    <div class="feature-card-icon">📹</div>
+                    <h3>AI Video / UGC Reels</h3>
+                    <p>Build video storyboards and run simulated interactive previews for UGC, promotional reels, tutorials, and product showcase clips with synced subtitles.</p>
+                </div>
+                <div class="glass-panel feature-item-card">
+                    <div class="feature-card-icon">👤</div>
+                    <h3>AI Speaking Avatars</h3>
+                    <p>Generate digital spokepersons and listen to them speak your marketing scripts aloud in Hinglish, Hindi, or English using browser voice narration.</p>
                 </div>
                 <div class="glass-panel feature-item-card">
                     <div class="feature-card-icon">📱</div>
@@ -225,8 +235,14 @@
                 <li id="tab-posters" class="menu-item" onclick="switchWorkspaceTab('posters')">
                     <span class="menu-item-icon">🎨</span> AI Poster Studio
                 </li>
-                <li id="tab-reels" class="menu-item" onclick="switchWorkspaceTab('reels')">
-                    <span class="menu-item-icon">🎬</span> Video Reels Creator
+                <li id="tab-images" class="menu-item" onclick="switchWorkspaceTab('images')">
+                    <span class="menu-item-icon">🖼️</span> AI Image Studio
+                </li>
+                <li id="tab-videos" class="menu-item" onclick="switchWorkspaceTab('videos')">
+                    <span class="menu-item-icon">📹</span> AI Video / Reels
+                </li>
+                <li id="tab-avatars" class="menu-item" onclick="switchWorkspaceTab('avatars')">
+                    <span class="menu-item-icon">👤</span> AI Speaking Avatars
                 </li>
                 <li id="tab-minisite" class="menu-item" onclick="switchWorkspaceTab('minisite')">
                     <span class="menu-item-icon">📱</span> Mini-Website Builder
@@ -279,14 +295,14 @@
                         <button class="btn btn-secondary" onclick="switchWorkspaceTab('posters')" style="padding: 20px; font-direction: column; gap: 8px;">
                             <span style="font-size: 1.5rem;">🎨</span> Create AI Poster
                         </button>
-                        <button class="btn btn-secondary" onclick="switchWorkspaceTab('reels')" style="padding: 20px; font-direction: column; gap: 8px;">
-                            <span style="font-size: 1.5rem;">🎬</span> Plan Viral Reel
+                        <button class="btn btn-secondary" onclick="switchWorkspaceTab('images')" style="padding: 20px; font-direction: column; gap: 8px;">
+                            <span style="font-size: 1.5rem;">🖼️</span> AI Image Studio
                         </button>
-                        <button class="btn btn-secondary" onclick="switchWorkspaceTab('minisite')" style="padding: 20px; font-direction: column; gap: 8px;">
-                            <span style="font-size: 1.5rem;">📱</span> Compile Mini-Site
+                        <button class="btn btn-secondary" onclick="switchWorkspaceTab('videos')" style="padding: 20px; font-direction: column; gap: 8px;">
+                            <span style="font-size: 1.5rem;">📹</span> Create AI Video
                         </button>
-                        <button class="btn btn-secondary" onclick="switchWorkspaceTab('decks')" style="padding: 20px; font-direction: column; gap: 8px;">
-                            <span style="font-size: 1.5rem;">📇</span> Build Slide Deck
+                        <button class="btn btn-secondary" onclick="switchWorkspaceTab('avatars')" style="padding: 20px; font-direction: column; gap: 8px;">
+                            <span style="font-size: 1.5rem;">👤</span> AI Talking Avatar
                         </button>
                     </div>
                 </div>
@@ -447,32 +463,205 @@
                 </div>
             </div>
 
-            <!-- D. Reels & Video Storyboarder Tab -->
-            <div id="pane-reels" class="workspace-view">
+            <!-- NEW: AI Image Studio Tab -->
+            <div id="pane-images" class="workspace-view">
                 <div class="view-header">
-                    <h2>AI Video Reels Storyboarder</h2>
-                    <p>Plan visual timelines, audio cues, and voiceover scripts for Reels, YouTube Shorts, or TikTok campaigns.</p>
+                    <h2>AI Image Studio</h2>
+                    <p>Generate high-quality promotional, product, and commercial images dynamically using standard presets and prompts.</p>
                 </div>
 
-                <div class="glass-panel" style="padding: 30px; margin-bottom: 30px;">
-                    <div style="display: flex; align-items: flex-end; gap: 20px;">
-                        <div class="form-group" style="flex-grow: 1; margin-bottom: 0;">
-                            <label class="form-label">Video Reel Campaign Subject / Focus</label>
-                            <input type="text" id="reels-topic-input" class="form-control" placeholder="e.g. Fast home delivery service, monsoon immunity booster kits, organic cosmetics">
+                <div class="poster-workspace-split">
+                    <!-- Left Side settings -->
+                    <div class="glass-panel" style="padding: 24px; display: flex; flex-direction: column; gap: 20px;">
+                        
+                        <div class="form-group">
+                            <label class="form-label">Art & Render Style</label>
+                            <select id="image-style-select" class="form-control">
+                                <option value="photorealistic commercial photography">Realistic Commercial</option>
+                                <option value="cinematic drama lighting">Cinematic Glow</option>
+                                <option value="3D render cartoon concept art">3D Cartoon / Mascot</option>
+                                <option value="cyberpunk holographic art">Cyberpunk Neon</option>
+                                <option value="clean watercolor illustration">Watercolor Illustration</option>
+                            </select>
                         </div>
-                        <button class="btn btn-primary" onclick="triggerReelsGeneration()" style="height: 52px;">Generate Reels Outline</button>
+
+                        <div class="form-group">
+                            <label class="form-label">Aspect Ratio</label>
+                            <select id="image-aspect-select" class="form-control">
+                                <option value="1:1">Square (1:1) - Post</option>
+                                <option value="9:16">Portrait (9:16) - Reel/Short</option>
+                                <option value="16:9">Landscape (16:9) - Banner</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Describe Your Marketing Image Prompt</label>
+                            <textarea id="image-prompt-textarea" class="form-control" style="min-height: 100px;" placeholder="e.g. A modern Indian pharmacy counter with neatly stacked packages, warm lights, golden accents"></textarea>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="triggerImageGeneration()">Generate AI Image</button>
+
+                        <div style="display: flex; gap: 10px; margin-top: 10px;" id="image-action-buttons">
+                            <button class="btn btn-secondary" style="flex-grow: 1;" onclick="scheduleImageEvent()">📅 Schedule</button>
+                            <button class="btn btn-emerald" style="flex-grow: 1;" onclick="downloadGeneratedImage()">💾 Download</button>
+                        </div>
+                    </div>
+
+                    <!-- Right Side Display -->
+                    <div style="text-align: center;">
+                        <div class="image-output-frame">
+                            <img id="generated-image-element" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23121218'/%3E%3Ctext x='50' y='50' fill='gray' font-size='4' text-anchor='middle'%3EGenerated AI Graphic Image Viewer%3C/text%3E%3C/svg%3E" alt="Generated AI Graphic">
+                        </div>
+                        <p style="font-size: 0.75rem; color: var(--text-dark); margin-top: 12px;">🌟 Powered by zero-latency free Imagen 3 / Pollinations.ai API engine.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW: AI Video Studio Tab -->
+            <div id="pane-videos" class="workspace-view">
+                <div class="view-header">
+                    <h2>AI Video / Reels Studio</h2>
+                    <p>Compile storyboard scenes for various video types and watch a live simulated playback overlay.</p>
+                </div>
+
+                <div class="glass-panel" style="padding: 24px; margin-bottom: 30px;">
+                    <div style="display: grid; grid-template-columns: 1fr 2fr auto; gap: 20px; align-items: flex-end;">
+                        
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Video Type Category</label>
+                            <select id="video-type-select" class="form-control">
+                                <option value="ugc">UGC (User Generated Content review)</option>
+                                <option value="promo">Promotional Clip (Announce discounts)</option>
+                                <option value="marketing">Marketing Ad (Branding pitch)</option>
+                                <option value="tutorial">Tutorial (How-to instructions)</option>
+                                <option value="product">Product Showcase video</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label">Video Campaign Topic Idea</label>
+                            <input type="text" id="video-topic-input" class="form-control" placeholder="e.g. Free express medicine home delivery in Karelibaug, Flat 20% discount on supplements">
+                        </div>
+
+                        <button class="btn btn-primary" onclick="triggerVideoTimelineGeneration()" style="height: 52px; padding: 0 30px;">Generate Video</button>
                     </div>
                 </div>
 
-                <!-- Storyboard Output Timeline -->
-                <div class="storyboard-timeline-flow" id="reels-storyboard-flow-container">
-                    <div style="text-align: center; color: var(--text-muted); padding: 40px 0;">
-                        <span>🎬 Click 'Generate Reels Outline' to compile your visual marketing story timeline cells.</span>
+                <!-- Main Video Output Split -->
+                <div class="poster-workspace-split">
+                    <!-- Left column: Interactive player -->
+                    <div>
+                        <div class="video-player-wrapper">
+                            <div class="video-player-screen">
+                                <!-- Background Image slide -->
+                                <div id="vplayer-bg" class="video-player-bg" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22320%22 height=%22568%22%3E%3Crect width=%22320%22 height=%22568%22 fill=%22%2308080c%22/%3E%3C/svg%3E');"></div>
+                                
+                                <div class="video-player-overlay">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span id="vplayer-brand-badge" style="font-weight: 700; color: var(--primary); font-size: 0.8rem; background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 20px;">Sharma Pharmacy</span>
+                                        <span id="vplayer-scene-num" style="font-size: 0.72rem; color: #fff; background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px;">Scene 1/4</span>
+                                    </div>
+                                    
+                                    <!-- Play center trigger -->
+                                    <div id="vplayer-play-btn" class="video-play-center-btn" onclick="toggleSimulatedVideoPlayback()">▶</div>
+
+                                    <div>
+                                        <!-- Timed Subtitle line -->
+                                        <div id="vplayer-subtitles" class="video-player-subtitles">
+                                            Click the Play Button above to watch simulated video slideshow with audio transcription subtitles.
+                                        </div>
+                                        
+                                        <!-- Seekbar progress -->
+                                        <div class="video-control-bar">
+                                            <div id="vplayer-progress" class="video-progress-indicator"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
+                            <button class="btn btn-secondary" onclick="scheduleVideoEvent()">📅 Schedule Reel</button>
+                        </div>
+                    </div>
+
+                    <!-- Right column: Scene cards -->
+                    <div class="storyboard-timeline-flow" id="video-scenes-list-container">
+                        <div style="text-align: center; color: var(--text-muted); padding: 50px 0;">
+                            <span>📹 Click 'Generate Video' to compile storyboards.</span>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div id="reels-action-footer" style="display: none; justify-content: flex-end; margin-top: 30px;">
-                    <button class="btn btn-primary" onclick="scheduleReelsEvent()">📅 Schedule Reel to Campaign Calendar</button>
+            <!-- NEW: AI Avatar Studio Tab -->
+            <div id="pane-avatars" class="workspace-view">
+                <div class="view-header">
+                    <h2>AI Speaking Avatars</h2>
+                    <p>Generate digital presenter scripts and use the browser voice narration to read text script out loud while animating.</p>
+                </div>
+
+                <div class="poster-workspace-split">
+                    <!-- Left: Inputs -->
+                    <div class="glass-panel" style="padding: 24px; display: flex; flex-direction: column; gap: 20px;">
+                        
+                        <div class="form-group">
+                            <label class="form-label">Presenter Avatar Style</label>
+                            <select id="avatar-model-select" class="form-control" onchange="updateAvatarImageStyle()">
+                                <option value="professional indian businesswoman">Professional Female (Business Outfit)</option>
+                                <option value="friendly young indian businessman">Professional Male (Casual Blazer)</option>
+                                <option value="cheerful indian male chef">Chef / Food Creator</option>
+                                <option value="smiling indian female pharmacist">Medical Pharmacist</option>
+                                <option value="futuristic digital hologram assistant mascot">Futuristic Mascot Robot</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Describe script topics (AI will draft script details)</label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" id="avatar-script-idea" class="form-control" style="flex-grow: 1;" placeholder="e.g. Announce shop timings or fast WhatsApp courier delivery">
+                                <button class="btn btn-secondary" onclick="triggerAvatarScriptGeneration()" style="padding: 12px 16px;">🔄 Compile Script</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Presenter Narration Script Text</label>
+                            <textarea id="avatar-script-textarea" class="form-control" style="min-height: 120px;" placeholder="Script text will load here. You can edit directly..."></textarea>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                            <div class="form-group">
+                                <label class="form-label">Speech Pitch</label>
+                                <input type="range" id="avatar-speech-pitch" min="0.5" max="1.5" step="0.1" value="1.0" class="form-control" style="padding: 0;">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Speech Rate / Speed</label>
+                                <input type="range" id="avatar-speech-rate" min="0.5" max="1.5" step="0.1" value="0.9" class="form-control" style="padding: 0;">
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="narrateAvatarSpeech()">🔊 Speak Script Out Loud</button>
+                    </div>
+
+                    <!-- Right: Animated presenter view -->
+                    <div style="text-align: center;">
+                        <div class="avatar-creator-wrapper">
+                            <div id="avatar-presenter-circle" class="avatar-talking-circle">
+                                <div class="avatar-speaking-glow"></div>
+                                <img id="avatar-display-image" src="https://image.pollinations.ai/prompt/professional%20indian%20businesswoman,%20headshot,%20white%20background?width=300&height=300&nologo=true" alt="AI Presenter">
+                            </div>
+
+                            <div id="avatar-voice-waves-row" class="avatar-voice-waves">
+                                <div class="voice-wave-bar"></div>
+                                <div class="voice-wave-bar"></div>
+                                <div class="voice-wave-bar"></div>
+                                <div class="voice-wave-bar"></div>
+                                <div class="voice-wave-bar"></div>
+                            </div>
+
+                            <h3 id="avatar-status-label" style="font-size: 1.15rem; color: var(--primary);">Avatar Presenter: Ready</h3>
+                            <p style="color: var(--text-muted); font-size: 0.82rem; max-width: 320px; margin: 0 auto;">Click 'Speak Script' to activate voice synthesis and trigger speaker animations.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
