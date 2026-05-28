@@ -3,796 +3,411 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GrowPilot AI - Automated Social Media & GMB Growth Engine</title>
+    <title>GrowPilot AI - Rank #1 on Google Maps & Autopilot Local SEO</title>
     
-    <!-- CSS Design Files -->
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="css/design_system.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="stylesheet" href="css/audit.css">
 </head>
 <body>
 
-    <div class="app-container">
-        
-        <!-- Navigation Sidebar -->
-        <aside class="sidebar">
-            <div class="brand-logo-container">
-                <div class="brand-icon-logo">
-                    <!-- Custom SVG Logo -->
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 2L2 22h20L12 2zm0 3.8L18.4 18H5.6L12 5.8zM11 10v4h2v-4h-2zm0 5v2h2v-2h-2z"/>
-                    </svg>
-                </div>
-                <div class="brand-name-logo gradient-text glowing-text">GrowPilot AI</div>
+    <!-- Sticky Navbar -->
+    <header class="landing-header">
+        <div class="logo-block" onclick="resetToHome()">
+            <div class="logo-icon-svg">
+                <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 3.8L18.4 18H5.6L12 5.8z"/></svg>
             </div>
+            <div class="gradient-text glowing-text">GrowPilot AI</div>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li class="nav-link-item" onclick="scrollToSection('features')">Features</li>
+                <li class="nav-link-item" onclick="scrollToSection('pricing')">Pricing</li>
+                <li class="nav-link-item" onclick="scrollToSection('testimonials')">Success Stories</li>
+            </ul>
+        </nav>
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <button class="btn btn-secondary" onclick="openSettingsModal()" style="padding: 10px 14px;">⚙️ API Settings</button>
+            <button class="btn btn-primary" onclick="scrollToSection('hero')">Scan Business</button>
+        </div>
+    </header>
 
-            <!-- Brand Profile Selection Widget -->
-            <div class="workspace-profile-widget" onclick="switchTab('profile')">
-                <div class="workspace-avatar" id="sidebar-avatar">GP</div>
-                <div class="workspace-info">
-                    <div class="workspace-name" id="sidebar-brand-name">GrowPilot AI</div>
-                    <div class="workspace-role" id="sidebar-brand-niche">AI SaaS Workspace</div>
-                </div>
-            </div>
+    <div class="container-landing">
 
-            <!-- Navigation Menu Links -->
-            <nav class="nav-menu">
-                <li>
-                    <a class="nav-item-link active" onclick="switchTab('dashboard')" id="nav-dashboard">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="7" height="7"></rect>
-                            <rect x="14" y="3" width="7" height="7"></rect>
-                            <rect x="14" y="14" width="7" height="7"></rect>
-                            <rect x="3" y="14" width="7" height="7"></rect>
-                        </svg>
-                        Dashboard Cockpit
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-item-link" onclick="switchTab('profile')" id="nav-profile">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                        Brand Profile Hub
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-item-link" onclick="switchTab('carousel')" id="nav-carousel">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="3" y1="9" x2="21" y2="9"></line>
-                            <line x1="9" y1="21" x2="9" y2="9"></line>
-                        </svg>
-                        Post & Carousel Creator
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-item-link" onclick="switchTab('ads')" id="nav-ads">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                            <polyline points="2 17 12 22 22 17"></polyline>
-                            <polyline points="2 12 12 17 22 12"></polyline>
-                        </svg>
-                        Ad Creative Studio
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-item-link" onclick="switchTab('video')" id="nav-video">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
-                            <line x1="7" y1="2" x2="7" y2="22"></line>
-                            <line x1="17" y1="2" x2="17" y2="22"></line>
-                            <line x1="2" y1="12" x2="22" y2="12"></line>
-                            <line x1="2" y1="7" x2="7" y2="7"></line>
-                            <line x1="2" y1="17" x2="7" y2="17"></line>
-                            <line x1="17" y1="17" x2="22" y2="17"></line>
-                            <line x1="17" y1="7" x2="22" y2="7"></line>
-                        </svg>
-                        Reels & Video Timelines
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-item-link" onclick="switchTab('gmb')" id="nav-gmb">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                            <circle cx="12" cy="10" r="3"></circle>
-                        </svg>
-                        GMB Local SEO Engine
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-item-link" onclick="switchTab('calendar')" id="nav-calendar">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="16" y1="2" x2="16" y2="6"></line>
-                            <line x1="8" y1="2" x2="8" y2="6"></line>
-                            <line x1="3" y1="10" x2="21" y2="10"></line>
-                        </svg>
-                        Content Calendar
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-item-link" onclick="switchTab('analytics')" id="nav-analytics">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="18" y1="20" x2="18" y2="10"></line>
-                            <line x1="12" y1="20" x2="12" y2="4"></line>
-                            <line x1="6" y1="20" x2="6" y2="14"></line>
-                        </svg>
-                        Analytics Tracker
-                    </a>
-                </li>
-            </nav>
-
-            <div class="sidebar-footer">
-                <div class="status-indicator-box">
-                    <span class="status-dot"></span>
-                    <span>GrowPilot AI Online</span>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Main Content Area -->
-        <main class="main-content">
+        <!-- 1. LANDING PAGE VIEW -->
+        <div id="view-landing" style="width: 100%; display: block;">
             
-            <!-- Top Navbar header -->
-            <header class="top-navbar">
-                <div class="page-title-block">
-                    <h1 id="viewport-title">Dashboard Cockpit</h1>
-                    <p id="viewport-subtitle">Welcome to your marketing control hub.</p>
-                </div>
-                <div class="navbar-actions">
-                    <div class="badge badge-secondary" style="height: fit-content; padding: 8px 14px;">GMB SYNC ACTIVE</div>
-                    <button class="btn btn-primary" onclick="openModal()">+ Quick Schedule</button>
-                </div>
-            </header>
-
-            <!-- 1. DASHBOARD VIEW -->
-            <div id="view-dashboard" class="view-panel active">
-                <div class="dashboard-hero-section">
-                    <div class="hero-content">
-                        <h2>Skyrocket Your Digital Visibility</h2>
-                        <p>Onboard your business details, generate hyper-contextual social copy, beautiful carousel slides, UGC frameworks, and rank #1 locally on Google Maps automatically.</p>
-                        <button class="btn btn-glow" onclick="switchTab('profile')">Configure Brand Profile</button>
+            <!-- Hero Area -->
+            <section class="hero-section" id="hero">
+                <h1>Rank <span class="gradient-text glowing-text">#1 on Google Maps</span>.<br>Get 3x More Local Customers.</h1>
+                <p>Onboard your local business, scan your Google Maps listing score, and use Gemini-powered AI tools to automate weekly posts, review responses, and keywords density.</p>
+                
+                <!-- Audit Bar -->
+                <div class="audit-bar-wrapper">
+                    <div class="audit-input-container" style="border-right: 1px solid var(--border-color); padding-right: 10px;">
+                        <!-- Store Icon -->
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <input type="text" id="input-biz-name" class="audit-field-input" placeholder="Enter Business / Shop Name" required>
                     </div>
+                    <div class="audit-input-container">
+                        <!-- Location Icon -->
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <input type="text" id="input-biz-loc" class="audit-field-input" placeholder="City or Location (e.g. Mumbai)">
+                    </div>
+                    <button class="btn btn-primary" onclick="triggerAuditScan()">Scan Listing Free</button>
                 </div>
 
-                <!-- Stats Counters Grid -->
-                <div class="stats-grid">
-                    <div class="glass-panel stat-card">
-                        <div class="stat-header">
-                            <span>TOTAL SOCIAL REACH</span>
-                            <div class="stat-icon-wrapper">
-                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                            </div>
-                        </div>
-                        <div class="stat-number">12,480</div>
-                        <div class="stat-trend trend-up">▲ +14.2% this week</div>
+                <div class="trust-banner-ticker">
+                    ⭐️ Trusted by 5,000+ local gyms, cafes, e-commerce shops, and realtors.
+                </div>
+            </section>
+
+            <!-- Features Grid -->
+            <section class="features-section-block" id="features">
+                <div class="features-header-title">
+                    <h2>Everything You Need to Rank #1 Local</h2>
+                    <p>GrowPilot simplifies GMB SEO tasks using high-converting AI content generators.</p>
+                </div>
+                <div class="features-grid-cards">
+                    <div class="glass-panel feature-item-card">
+                        <div class="feature-card-icon">📈</div>
+                        <h3>Google Score Audit</h3>
+                        <p>Analyze your profile details against local competitors and get an actionable score optimization checklist.</p>
                     </div>
-                    <div class="glass-panel stat-card primary-style">
-                        <div class="stat-header">
-                            <span>SCHEDULED CAMPAIGNS</span>
-                            <div class="stat-icon-wrapper">
-                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                            </div>
-                        </div>
-                        <div class="stat-number" id="dashboard-scheduled-count">3 Posts</div>
-                        <div class="stat-trend text-muted">Weekly auto-queue active</div>
+                    <div class="glass-panel feature-item-card">
+                        <div class="feature-card-icon">✍️</div>
+                        <h3>AI GMB Posting</h3>
+                        <p>Generate SEO-friendly weekly promotions and updates including relevant local search terms and hashtags.</p>
                     </div>
-                    <div class="glass-panel stat-card">
-                        <div class="stat-header">
-                            <span>GMB SEARCH IMPRESSIONS</span>
-                            <div class="stat-icon-wrapper">
-                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                            </div>
-                        </div>
-                        <div class="stat-number">4,120</div>
-                        <div class="stat-trend trend-up">▲ +22.4% local SEO rise</div>
+                    <div class="glass-panel feature-item-card">
+                        <div class="feature-card-icon">💬</div>
+                        <h3>Smart Review Reply</h3>
+                        <p>Draft keyword-dense replies to positive and negative customer reviews automatically to boost Maps authority.</p>
                     </div>
-                    <div class="glass-panel stat-card">
-                        <div class="stat-header">
-                            <span>LOCAL MAP POSITION</span>
-                            <div class="stat-icon-wrapper">
-                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                            </div>
-                        </div>
-                        <div class="stat-number">#1.4 avg</div>
-                        <div class="stat-trend trend-up">▲ Top 3 Rank achieved</div>
+                    <div class="glass-panel feature-item-card">
+                        <div class="feature-card-icon">🔍</div>
+                        <h3>Keyword Optimizer</h3>
+                        <p>Find high-intent search terms that local customers use to search for shops in your niche.</p>
                     </div>
                 </div>
+            </section>
 
-                <!-- Daily Planner checklist actions -->
-                <div class="daily-generator-box">
-                    <div class="section-header-block">
-                        <h3 class="section-title">Today's Content Recommendation Checklist</h3>
-                        <span class="badge badge-primary">Auto-Generated Daily Recommendations</span>
+            <!-- Testimonials -->
+            <section class="testimonials-section-block" id="testimonials">
+                <div class="features-header-title">
+                    <h2>Hear From Business Owners</h2>
+                    <p>Real results from local brands scaling their Google Maps search rankings.</p>
+                </div>
+                <div class="testimonial-grid-cards">
+                    <div class="glass-panel testimonial-item-card">
+                        <div class="testimonial-rating-row">★★★★★</div>
+                        <p class="testimonial-quote-text">"Our pizza shop ranked #5 on Google Maps. After using GrowPilot to post weekly and respond to reviews, we are now sitting at #1. Traffic increased by 40%!"</p>
+                        <div class="testimonial-user-profile">
+                            <div class="testimonial-avatar">MS</div>
+                            <div class="testimonial-user-info">
+                                <h4>Mamma Mia Pizza</h4>
+                                <p>Mumbai, India</p>
+                            </div>
+                        </div>
                     </div>
+                    <div class="glass-panel testimonial-item-card">
+                        <div class="testimonial-rating-row">★★★★★</div>
+                        <p class="testimonial-quote-text">"Adding keywords to our descriptions and replying to reviews took hours. GrowPilot generates SEO replies and GMB posts in 1 click."</p>
+                        <div class="testimonial-user-profile">
+                            <div class="testimonial-avatar">PT</div>
+                            <div class="testimonial-user-info">
+                                <h4>Prime Fitness Gym</h4>
+                                <p>Bangalore, India</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pricing Grid -->
+            <section class="pricing-section-block" id="pricing">
+                <div class="features-header-title">
+                    <h2>Transparent Plans for Every Business</h2>
+                    <p>Start scanning for free, upgrade as you grow your local customer base.</p>
+                </div>
+                <div class="pricing-grid-cards">
+                    <div class="glass-panel pricing-item-card">
+                        <div class="price-title-box">
+                            <h3>Starter Scan</h3>
+                            <p>For new local businesses checking their score.</p>
+                        </div>
+                        <div>
+                            <div class="price-value-box">
+                                <span class="price-amount">$0</span>
+                                <span class="price-frequency">/ forever</span>
+                            </div>
+                            <ul class="price-features-list">
+                                <li>✔️ Free GMB Score Scan</li>
+                                <li>✔️ Core Audit Checklist</li>
+                                <li>✔️ Offline template fallback tools</li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-secondary" onclick="scrollToSection('hero')" style="width: 100%;">Get Started</button>
+                    </div>
+
+                    <div class="glass-panel pricing-item-card popular-tier">
+                        <div class="popular-ribbon">POPULAR</div>
+                        <div class="price-title-box">
+                            <h3>GrowPilot Pro</h3>
+                            <p>Best for ranking #1 and automating customer interactions.</p>
+                        </div>
+                        <div>
+                            <div class="price-value-box">
+                                <span class="price-amount">$19</span>
+                                <span class="price-frequency">/ month</span>
+                            </div>
+                            <ul class="price-features-list">
+                                <li>✔️ Unlimited GMB Score Scans</li>
+                                <li>✔️ Live Google Gemini AI tools</li>
+                                <li>✔️ SEO Keyword suggestions generator</li>
+                                <li>✔️ Priority Maps positioning checker</li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-primary" onclick="scrollToSection('hero')" style="width: 100%;">Go Pro Now</button>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- 2. SCANNING LOADER VIEW -->
+        <div id="view-scanner" class="audit-scanner-viewport">
+            <div class="radar-sweep-container">
+                <div class="radar-ring radar-ring-1"></div>
+                <div class="radar-ring radar-ring-2"></div>
+                <div class="radar-ring radar-ring-3"></div>
+                <!-- Interactive blinking targets -->
+                <div class="radar-scanner-blip" style="top: 30px; left: 45px; animation-delay: 0.2s;"></div>
+                <div class="radar-scanner-blip" style="top: 110px; left: 130px; animation-delay: 0.7s;"></div>
+                <div class="radar-scanner-blip" style="top: 80px; left: 20px; animation-delay: 1.1s;"></div>
+            </div>
+            <div>
+                <h3 class="scanner-status-text gradient-text">Auditing Google Maps Listing...</h3>
+                <p class="scanner-details-log" id="scanner-log-lbl">Locating brand coordinates...</p>
+            </div>
+        </div>
+
+        <!-- 3. AUDIT REPORT VIEW -->
+        <div id="view-report" class="audit-report-viewport">
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px;">
+                <div>
+                    <h2 id="report-biz-name" class="gradient-text">Royal Spice Cafe</h2>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;" id="report-biz-loc">Mumbai, India</p>
+                </div>
+                <button class="btn btn-secondary" onclick="resetToHome()">← Scan New Business</button>
+            </div>
+
+            <div class="report-split-grid">
+                
+                <!-- Left: Score Circle widget -->
+                <div class="glass-panel report-sidebar-score">
+                    <h3>Google Search Score</h3>
                     
-                    <div class="daily-grid">
-                        <!-- Recommendation 1 -->
-                        <div class="glass-panel daily-card">
-                            <div class="daily-card-header">
-                                <div class="daily-card-type">
-                                    <span class="badge badge-primary">Carousel</span>
-                                </div>
-                                <span class="badge badge-secondary">Instagram</span>
-                            </div>
-                            <h4 id="rec-carousel-title">Educational Slide Deck</h4>
-                            <p>Generate a carousel explaining the core problem your product solves. Educate prospects step-by-step.</p>
-                            <div class="daily-card-actions">
-                                <button class="btn btn-primary" onclick="switchTab('carousel')">Build Carousel</button>
-                            </div>
-                        </div>
+                    <div class="score-circle-dial">
+                        <svg width="150" height="150">
+                            <circle cx="75" cy="75" r="65" class="score-circle-track-bg"></circle>
+                            <circle cx="75" cy="75" r="65" class="score-circle-fill-bar" id="score-dial-circle" stroke-dasharray="408.4" stroke-dashoffset="408.4"></circle>
+                        </svg>
+                        <div class="score-percentage-value" id="score-percentage-lbl">0%</div>
+                    </div>
 
-                        <!-- Recommendation 2 -->
-                        <div class="glass-panel daily-card">
-                            <div class="daily-card-header">
-                                <div class="daily-card-type">
-                                    <span class="badge badge-success">Local Update</span>
-                                </div>
-                                <span class="badge badge-success" style="background: rgba(242, 153, 0, 0.15); color: #f29900; border-color: rgba(242, 153, 0, 0.3);">Google GMB</span>
-                            </div>
-                            <h4 id="rec-gmb-title">Google Maps SEO Post</h4>
-                            <p>Publish an SEO-focused weekly update including your primary search terms to boost GMB impressions.</p>
-                            <div class="daily-card-actions">
-                                <button class="btn btn-primary" onclick="switchTab('gmb')">Draft GMB Post</button>
-                            </div>
-                        </div>
+                    <span class="badge badge-danger" id="score-grade-badge">Needs Attention</span>
 
-                        <!-- Recommendation 3 -->
-                        <div class="glass-panel daily-card">
-                            <div class="daily-card-header">
-                                <div class="daily-card-type">
-                                    <span class="badge badge-danger">Video Hook</span>
-                                </div>
-                                <span class="badge badge-danger">YT Shorts</span>
-                            </div>
-                            <h4 id="rec-video-title">Viral UGC Hook & Script</h4>
-                            <p>Get a high-impact opening hook script for a TikTok/Reel. Includes scene timelines and caption prompts.</p>
-                            <div class="daily-card-actions">
-                                <button class="btn btn-primary" onclick="switchTab('video')">View Video Plan</button>
-                            </div>
+                    <div class="score-quick-insights">
+                        <div class="insight-metric-row">
+                            <span style="color: var(--text-muted);">GMB Maps Rating</span>
+                            <strong id="sidebar-rating">4.2 / 5.0</strong>
+                        </div>
+                        <div class="insight-metric-row">
+                            <span style="color: var(--text-muted);">Total Reviews</span>
+                            <strong id="sidebar-reviews">34 reviews</strong>
+                        </div>
+                        <div class="insight-metric-row">
+                            <span style="color: var(--text-muted);">Uploaded Photos</span>
+                            <strong id="sidebar-photos">6 photos</strong>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- 2. BRAND PROFILE VIEW -->
-            <div id="view-profile" class="view-panel">
-                <div class="settings-split-layout">
-                    <!-- Left: Profile input fields -->
-                    <div class="glass-panel onboarding-form-card">
-                        <h2>Define Your Business Details</h2>
-                        <p>Provide specific details about your brand. Our AI engine uses these inputs to craft customized social captions, slider copy, local ads, and SEO updates.</p>
-                        
-                        <form id="brand-form" onsubmit="saveBrandProfile(event)">
-                            <div class="form-group">
-                                <label class="form-label">Business / Product Name</label>
-                                <input type="text" id="brand-name-input" class="form-control" placeholder="e.g. GrowPilot AI" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Industry Niche / Category</label>
-                                <select id="brand-niche-select" class="form-control" required>
-                                    <option value="saas">AI software / SaaS / Tech</option>
-                                    <option value="gym">Gym / Fitness Center / Health Club</option>
-                                    <option value="restaurant">Restaurant / Coffee Shop / Food</option>
-                                    <option value="ecommerce">E-Commerce Brand / Fashion / Retail</option>
-                                    <option value="real-estate">Real Estate Agency / Property Broker</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Product / Service Description</label>
-                                <textarea id="brand-desc-input" class="form-control" placeholder="Describe what makes your business unique and your key offers..." required></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Target Audience</label>
-                                <input type="text" id="brand-audience-input" class="form-control" placeholder="e.g. Busy parents, startup founders, fitness enthusiasts" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Core SEO Keywords</label>
-                                <input type="text" id="brand-keywords-input" class="form-control" placeholder="e.g. local organic meals, best personal trainer, simple AI scheduler" required>
-                            </div>
-
-                            <div class="form-group" style="margin-top: 10px; border-top: 1px dashed var(--border-color); padding-top: 15px;">
-                                <label class="form-label" style="color: var(--secondary); display: flex; align-items: center; gap: 6px;">
-                                    <span>Google Gemini API Key</span>
-                                    <span class="badge badge-secondary" style="font-size: 0.6rem; padding: 2px 6px;">Optional</span>
-                                </label>
-                                <input type="password" id="gemini-key-input" class="form-control" placeholder="AIzaSy..." style="border-color: rgba(6, 182, 212, 0.3);">
-                                <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; line-height: 1.4;">
-                                    Get a free API key at <a href="https://aistudio.google.com/" target="_blank" style="text-decoration: underline; color: var(--secondary);">Google AI Studio</a>. If left blank, GrowPilot runs in high-fidelity template simulation mode.
-                                </p>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Tone of Voice</label>
-                                <div class="tone-selector-grid">
-                                    <div class="tone-card-option active" id="tone-bold" onclick="selectTone('bold')">
-                                        <div class="tone-title">Bold</div>
-                                        <div class="tone-desc">High energy, exclamation marks, action-driven</div>
-                                    </div>
-                                    <div class="tone-card-option" id="tone-casual" onclick="selectTone('casual')">
-                                        <div class="tone-title">Casual</div>
-                                        <div class="tone-desc">Friendly, relatable, lowercase-friendly, conversational</div>
-                                    </div>
-                                    <div class="tone-card-option" id="tone-professional" onclick="selectTone('professional')">
-                                        <div class="tone-title">Professional</div>
-                                        <div class="tone-desc">Structured benefits, authoritative, neat grammar</div>
-                                    </div>
-                                    <div class="tone-card-option" id="tone-witty" onclick="selectTone('witty')">
-                                        <div class="tone-title">Witty</div>
-                                        <div class="tone-desc">Humorous cues, clever, slight sarcasm</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Save Brand Profile</button>
-                        </form>
-                    </div>
-
-                    <!-- Right: Active Brand Preview Card -->
-                    <div class="glass-panel workspace-preview-panel">
-                        <div class="workspace-avatar" style="width: 80px; height: 80px; font-size: 2.2rem; margin-bottom: 20px;" id="preview-avatar">GP</div>
-                        <h2 id="preview-brand-name">GrowPilot AI</h2>
-                        <p class="badge badge-primary" style="margin: 10px 0;" id="preview-niche-badge">SaaS Niche</p>
-                        <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 380px; margin-top: 10px; min-height: 80px;" id="preview-desc-text">
-                            Configure your brand settings to auto-compile custom descriptions.
-                        </p>
-                        
-                        <div class="brand-badge-banner">
-                            <span class="badge badge-secondary" id="preview-tone-badge">Bold Tone</span>
-                            <span class="badge badge-success">AI SYNC READY</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3. POST & CAROUSEL CREATOR VIEW -->
-            <div id="view-carousel" class="view-panel">
-                <div class="carousel-editor-layout">
-                    <!-- Left: Carousel Canvas Slide Viewport -->
-                    <div class="carousel-canvas-container">
-                        <div class="carousel-slide-viewport theme-cyber" id="carousel-viewport">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <div class="slide-watermark" id="slide-watermark-text">GROWPILOT AI</div>
-                                <div class="slide-number-indicator" id="slide-number-lbl">1/4</div>
-                            </div>
-                            
-                            <div class="slide-content-text">
-                                <div class="slide-title-text" id="slide-title-display">Unlock 10x Growth</div>
-                                <div class="slide-body-text" id="slide-body-display">Stop spending hours writing and designing posts. Let AI handle your marketing flow.</div>
-                            </div>
-
-                            <div class="slide-footer-block">
-                                <div class="slide-brand-name" id="slide-brand-lbl">growpilot.ai</div>
-                                <div class="slide-action-hint">SWIPE LEFT ➔</div>
-                            </div>
-                        </div>
-
-                        <!-- Carousel Page Index Indicators -->
-                        <div class="carousel-navigation-controls">
-                            <button class="btn btn-icon" onclick="navigateSlide('prev')">◀</button>
-                            <div class="slide-index-dots" id="slide-dots-container">
-                                <span class="slide-dot active"></span>
-                                <span class="slide-dot"></span>
-                                <span class="slide-dot"></span>
-                                <span class="slide-dot"></span>
-                            </div>
-                            <button class="btn btn-icon" onclick="navigateSlide('next')">▶</button>
-                        </div>
-                    </div>
-
-                    <!-- Right: Edit Canvas and Content Settings Panel -->
-                    <div class="glass-panel carousel-controls-panel">
-                        <h3>Slide Editor Settings</h3>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Edit the contents of each slide and select design variables.</p>
-                        
-                        <div class="form-group">
-                            <label class="form-label">Select Canvas Theme Style</label>
-                            <div class="theme-picker-grid">
-                                <div class="theme-btn-option active" style="background: linear-gradient(135deg, #0f0c1b, #1d1836); color: #fff;" onclick="selectCarouselTheme('cyber')">Cyber</div>
-                                <div class="theme-btn-option" style="background: #f8f9fa; color: #1a1d20;" onclick="selectCarouselTheme('minimal')">Minimal</div>
-                                <div class="theme-btn-option" style="background: linear-gradient(135deg, #ff5e62, #ff9966); color: #fff;" onclick="selectCarouselTheme('sunset')">Sunset</div>
-                                <div class="theme-btn-option" style="background: linear-gradient(135deg, #11998e, #38ef7d); color: #fff;" onclick="selectCarouselTheme('forest')">Forest</div>
-                                <div class="theme-btn-option" style="background: linear-gradient(135deg, #00c6ff, #0072ff); color: #fff;" onclick="selectCarouselTheme('ocean')">Ocean</div>
-                                <div class="theme-btn-option" style="background: linear-gradient(135deg, #1e1e1e, #111111); color: #ffd700;" onclick="selectCarouselTheme('gold')">Gold Premium</div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Active Slide Title Text</label>
-                            <input type="text" id="slide-title-input" class="form-control" oninput="updateSlideContent()">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Active Slide Body Description</label>
-                            <textarea id="slide-body-input" class="form-control" oninput="updateSlideContent()"></textarea>
-                        </div>
-
-                        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                            <button class="btn btn-secondary" style="flex-grow: 1;" onclick="addCustomSlide()">+ Add Slide</button>
-                            <button class="btn btn-secondary" style="flex-grow: 1;" onclick="deleteCurrentSlide()">Delete Slide</button>
-                        </div>
-
-                        <button class="btn btn-primary" style="width: 100%;" onclick="scheduleCarouselToCalendar()">Schedule Slide Deck to Calendar</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4. AD CREATIVE STUDIO VIEW -->
-            <div id="view-ads" class="view-panel">
-                <div class="settings-split-layout">
-                    <!-- Left: High Converting Ads Copy -->
-                    <div class="glass-panel onboarding-form-card">
-                        <h3>High-Converting Ad Copies</h3>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Formulated utilizing classic digital copywriting frameworks (AIDA / PAS).</p>
-                        
-                        <div class="form-group">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                <label class="form-label">Option 1: Attention-Interest-Desire-Action (AIDA)</label>
-                                <span class="badge badge-primary">AIDA Framework</span>
-                            </div>
-                            <textarea id="ad-aida-textarea" class="form-control" style="min-height: 150px; font-size: 0.88rem;"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                <label class="form-label">Option 2: Problem-Agitate-Solve (PAS)</label>
-                                <span class="badge badge-secondary">PAS Framework</span>
-                            </div>
-                            <textarea id="ad-pas-textarea" class="form-control" style="min-height: 150px; font-size: 0.88rem;"></textarea>
-                        </div>
-
-                        <button class="btn btn-primary" onclick="scheduleAdToCalendar('AIDA')">Schedule Selected Ad to Scheduler</button>
-                    </div>
-
-                    <!-- Right: UGC Video Script Builder -->
-                    <div class="glass-panel onboarding-form-card">
-                        <h3>UGC (User-Generated Content) Script</h3>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">A detailed video creator blueprint containing hooks, body pacing, and action elements.</p>
-                        
-                        <div class="ugc-script-container">
-                            <div class="glass-panel ugc-part-card hook-part">
-                                <div class="ugc-part-header">
-                                    <span class="ugc-part-badge">THE HOOK (0 - 3s)</span>
-                                </div>
-                                <p style="font-size: 0.88rem;" id="ugc-hook-disp">Analyzing script hook...</p>
-                            </div>
-
-                            <div class="glass-panel ugc-part-card body-part">
-                                <div class="ugc-part-header">
-                                    <span class="ugc-part-badge">THE BODY / VALUE (3 - 12s)</span>
-                                </div>
-                                <p style="font-size: 0.88rem;" id="ugc-body-disp">Analyzing script body...</p>
-                            </div>
-
-                            <div class="glass-panel ugc-part-card cta-part">
-                                <div class="ugc-part-header">
-                                    <span class="ugc-part-badge">THE CALL-TO-ACTION (12 - 15s)</span>
-                                </div>
-                                <p style="font-size: 0.88rem;" id="ugc-cta-disp">Analyzing script CTA...</p>
-                            </div>
-                        </div>
-
-                        <button class="btn btn-secondary" style="width: 100%; margin-top: 20px;" onclick="copyUgcScript()">📋 Copy UGC Script</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 5. REELS & VIDEO STORYBOARDS VIEW -->
-            <div id="view-video" class="view-panel">
-                <div class="glass-panel onboarding-form-card" style="margin-bottom: 20px;">
-                    <h3>Instagram Reels & YouTube Shorts Video Storyboard</h3>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Step-by-step visual, audio, and subtitle planning layout for your reels production.</p>
+                <!-- Right: Task checklist -->
+                <div class="report-tasks-checklist">
                     
-                    <div class="timeline-storyboard-flow" id="storyboard-timeline-container">
-                        <!-- Populated dynamically via JS -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- 6. GMB LOCAL SEO OPTIMIZER VIEW -->
-            <div id="view-gmb" class="view-panel">
-                <div class="settings-split-layout">
-                    <!-- Left: Google Search maps previewer & update planner -->
-                    <div class="glass-panel onboarding-form-card">
-                        <h3>Local Search SEO Update</h3>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Publish weekly localized keywords updates to signal activity to Google local crawler bot.</p>
-                        
-                        <div class="form-group">
-                            <label class="form-label">SEO Optimized Post Text</label>
-                            <textarea id="gmb-post-textarea" class="form-control" style="min-height: 120px;"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Call To Action (CTA) Action</label>
-                            <select id="gmb-cta-select" class="form-control">
-                                <option value="Call Now">Call Now (Highly Recommended for mobile click-to-call)</option>
-                                <option value="Learn More">Learn More (Link to Website)</option>
-                                <option value="Book Now">Book Now (Calendar Scheduling Link)</option>
-                            </select>
-                        </div>
-
-                        <div style="display: flex; gap: 10px;">
-                            <button class="btn btn-primary" style="flex-grow: 1;" onclick="publishGmbUpdateImmediately()">Publish GMB Update Now</button>
-                            <button class="btn btn-secondary" onclick="scheduleGmbUpdate()">Schedule</button>
-                        </div>
-
-                        <div class="seo-optimization-meter" style="margin-top: 30px;">
-                            <div class="meter-header-label">
-                                <span>GMB Listing Optimization SEO Health</span>
-                                <span id="seo-score-lbl">85%</span>
-                            </div>
-                            <div class="meter-track-bg">
-                                <div class="meter-fill-bar" style="width: 85%;" id="seo-score-bar"></div>
-                            </div>
-                            <p style="font-size: 0.75rem; color: var(--text-muted);">
-                                💡 Tip: Add high-resolution photos of your workspace to hit 100% search visibility score.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Right: Google My Business Listings Preview & Responder widget -->
-                    <div style="display: flex; flex-direction: column; gap: 24px;">
-                        <!-- GMB Listing Preview -->
-                        <div class="gmb-listing-preview">
-                            <div class="gmb-header">
-                                <div class="gmb-avatar-logo" id="gmb-avatar-circle">GP</div>
-                                <div>
-                                    <div class="gmb-brand-title" id="gmb-preview-name">GrowPilot AI</div>
-                                    <div class="gmb-brand-subtitle">Google Business Profile</div>
-                                </div>
-                            </div>
-                            <div class="gmb-rating-row">
-                                <div class="gmb-stars">★★★★★</div>
-                                <div class="gmb-rating-text">4.9 (42 reviews)</div>
-                            </div>
-                            <div class="gmb-post-image" style="background-image: url('assets/dashboard_hero.png');" id="gmb-preview-img"></div>
-                            <div class="gmb-body-text" id="gmb-preview-body">Loading latest update...</div>
-                            <div class="gmb-action-row-btn">
-                                <button class="gmb-blue-btn" id="gmb-preview-cta">Call Now</button>
-                                <button class="gmb-blue-btn" style="color: #5f6368; cursor: default;">Share</button>
-                            </div>
-                        </div>
-
-                        <!-- GMB Reviews Smart Responder -->
-                        <div class="glass-panel onboarding-form-card">
-                            <h3>AI Customer Review Responder</h3>
-                            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px;">Paste a review below. The AI outputs a friendly response filled with local SEO target keywords.</p>
-                            
-                            <div class="form-group">
-                                <label class="form-label">Review Text Input</label>
-                                <textarea id="review-input-box" class="form-control" placeholder="e.g. Great experience! The staff was friendly and the service was fast." style="min-height: 80px;"></textarea>
-                            </div>
-
-                            <button class="btn btn-secondary" style="width: 100%; margin-bottom: 16px;" onclick="generateAiReviewResponse()">Generate SEO Response</button>
-
-                            <div id="review-response-card" style="display: none; background: hsla(224, 71%, 1%, 0.6); padding: 15px; border-radius: var(--radius-sm); border: 1px dashed var(--secondary);">
-                                <div style="font-size: 0.75rem; color: var(--secondary); font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">Recommended Response:</div>
-                                <p style="font-size: 0.85rem;" id="review-response-text">Response loading...</p>
-                                <button class="btn btn-icon" style="margin-top: 12px; font-size: 0.75rem; padding: 6px 12px;" onclick="copyReviewReply()">Copy Reply</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 7. CONTENT CALENDAR VIEW -->
-            <div id="view-calendar" class="view-panel">
-                <div class="calendar-layout-view">
-                    <!-- Left: Interactive monthly view grid -->
-                    <div class="glass-panel calendar-wrapper">
-                        <div class="calendar-header-controls">
-                            <button class="btn btn-icon" onclick="changeMonth('prev')">◀</button>
-                            <h3 class="calendar-month-title" id="calendar-month-year-title">May 2026</h3>
-                            <button class="btn btn-icon" onclick="changeMonth('next')">▶</button>
-                        </div>
-
-                        <div class="calendar-grid-cells" id="calendar-grid-container">
+                    <!-- Group 1: Critical Fixes -->
+                    <div class="glass-panel checklist-group-card" id="card-critical-group">
+                        <h3 class="checklist-group-title" style="color: var(--accent-danger);">
+                            <span>❌</span> Critical Fixes Needed
+                        </h3>
+                        <div class="checklist-items-stack" id="critical-tasks-container">
                             <!-- Populated dynamically via JS -->
                         </div>
                     </div>
 
-                    <!-- Right: Channels Status integration config & Queued list -->
-                    <div style="display: flex; flex-direction: column; gap: 30px;">
-                        
-                        <!-- Channels Connection status panel -->
-                        <div class="glass-panel scheduler-queue-sidebar">
-                            <h3>Connected Platforms</h3>
-                            <div style="display: flex; flex-direction: column; gap: 12px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-color);">
-                                    <span style="font-size: 0.85rem; font-weight: 600;">Facebook Page</span>
-                                    <button class="badge" id="btn-conn-facebook" onclick="togglePlatformConnection('facebook')">Connected</button>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-color);">
-                                    <span style="font-size: 0.85rem; font-weight: 600;">Instagram Account</span>
-                                    <button class="badge" id="btn-conn-instagram" onclick="togglePlatformConnection('instagram')">Connected</button>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-color);">
-                                    <span style="font-size: 0.85rem; font-weight: 600;">YouTube Channel</span>
-                                    <button class="badge" id="btn-conn-youtube" onclick="togglePlatformConnection('youtube')">Disconnected</button>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0;">
-                                    <span style="font-size: 0.85rem; font-weight: 600;">Google My Business</span>
-                                    <button class="badge" id="btn-conn-gmb" onclick="togglePlatformConnection('gmb')">Connected</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Queued list -->
-                        <div class="glass-panel scheduler-queue-sidebar">
-                            <h3>Upcoming Queue Items</h3>
-                            <div class="queue-items-stack" id="scheduler-queue-container">
-                                <!-- Populated dynamically via JS -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 8. PERFORMANCE ANALYTICS VIEW -->
-            <div id="view-analytics" class="view-panel">
-                <div class="settings-split-layout">
-                    <!-- Left: Google Search visibility metrics -->
-                    <div class="glass-panel chart-card-wrapper">
-                        <div class="chart-card-header">
-                            <div>
-                                <h3>Google Maps Search Visibility</h3>
-                                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">Impressions split of local searches over past 30 days.</p>
-                            </div>
-                            <span class="badge badge-success">▲ +24%</span>
-                        </div>
-
-                        <div class="graph-canvas-container">
-                            <div class="graph-y-axis-labels">
-                                <span>5K</span>
-                                <span>2.5K</span>
-                                <span>0</span>
-                            </div>
-                            
-                            <!-- Graph bars -->
-                            <div class="graph-bar-element" style="height: 45%; margin-left: 35px;">
-                                <div class="graph-bar-tooltip">1.2K Views</div>
-                                <div class="graph-x-axis-caption" style="position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); white-space: nowrap;">Week 1</div>
-                            </div>
-                            <div class="graph-bar-element" style="height: 60%;">
-                                <div class="graph-bar-tooltip">2.1K Views</div>
-                                <div class="graph-x-axis-caption" style="position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); white-space: nowrap;">Week 2</div>
-                            </div>
-                            <div class="graph-bar-element" style="height: 78%;">
-                                <div class="graph-bar-tooltip">3.4K Views</div>
-                                <div class="graph-x-axis-caption" style="position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); white-space: nowrap;">Week 3</div>
-                            </div>
-                            <div class="graph-bar-element" style="height: 92%;">
-                                <div class="graph-bar-tooltip">4.2K Views</div>
-                                <div class="graph-x-axis-caption" style="position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); white-space: nowrap;">Week 4</div>
-                            </div>
-                        </div>
-                        
-                        <div style="margin-top: 50px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                            <div class="glass-panel" style="padding: 12px 16px;">
-                                <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">DISCOVERY SEARCHES</div>
-                                <div style="font-size: 1.3rem; font-weight: 700; font-family: var(--font-heading); color: var(--secondary);">78.4%</div>
-                            </div>
-                            <div class="glass-panel" style="padding: 12px 16px;">
-                                <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">DIRECT FINDINGS</div>
-                                <div style="font-size: 1.3rem; font-weight: 700; font-family: var(--font-heading); color: var(--primary);">21.6%</div>
-                            </div>
+                    <!-- Group 2: Warning optimizations -->
+                    <div class="glass-panel checklist-group-card" id="card-warning-group">
+                        <h3 class="checklist-group-title" style="color: var(--accent-warning);">
+                            <span>⚠️</span> Optimization Opportunities
+                        </h3>
+                        <div class="checklist-items-stack" id="warning-tasks-container">
+                            <!-- Populated dynamically via JS -->
                         </div>
                     </div>
 
-                    <!-- Right: Rank Tracking checklist metrics -->
-                    <div class="glass-panel chart-card-wrapper">
-                        <h3>Local SEO Ranking Growth</h3>
-                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 24px;">Actionable milestones completed to secure the #1 Search Rank on Google.</p>
-                        
-                        <div style="display: flex; flex-direction: column; gap: 16px;">
-                            <!-- Milestone 1 -->
-                            <div style="display: flex; gap: 12px; align-items: flex-start;">
-                                <div class="status-dot" style="margin-top: 6px; background: var(--accent-success); box-shadow: 0 0 8px var(--accent-success);"></div>
-                                <div>
-                                    <div style="font-size: 0.9rem; font-weight: 700;">Establish Consistent Name-Address-Phone (NAP)</div>
-                                    <p style="font-size: 0.78rem; color: var(--text-muted);">Matches exactly across Web page and GMB listings. [COMPLETED]</p>
-                                </div>
-                            </div>
-
-                            <!-- Milestone 2 -->
-                            <div style="display: flex; gap: 12px; align-items: flex-start;">
-                                <div class="status-dot" style="margin-top: 6px; background: var(--accent-success); box-shadow: 0 0 8px var(--accent-success);"></div>
-                                <div>
-                                    <div style="font-size: 0.9rem; font-weight: 700;">Weekly GMB Local updates scheduling</div>
-                                    <p style="font-size: 0.78rem; color: var(--text-muted);">Signals Googlebot of fresh business activity. [COMPLETED]</p>
-                                </div>
-                            </div>
-
-                            <!-- Milestone 3 -->
-                            <div style="display: flex; gap: 12px; align-items: flex-start;">
-                                <div class="status-dot" style="margin-top: 6px; background: var(--primary); box-shadow: 0 0 8px var(--primary);"></div>
-                                <div>
-                                    <div style="font-size: 0.9rem; font-weight: 700;">AI Review Responder Keyword Injection</div>
-                                    <p style="font-size: 0.78rem; color: var(--text-muted);">Replied reviews crawlable keywords density increase. [ACTIVE]</p>
-                                </div>
-                            </div>
-
-                            <!-- Milestone 4 -->
-                            <div style="display: flex; gap: 12px; align-items: flex-start;">
-                                <div class="status-dot" style="margin-top: 6px; background: var(--text-dark); box-shadow: none;"></div>
-                                <div>
-                                    <div style="font-size: 0.9rem; font-weight: 700;">Add Local Map Schema Markup to Website</div>
-                                    <p style="font-size: 0.78rem; color: var(--text-muted);">Deploy structured coordinates JSON-LD markup. [QUEUED]</p>
-                                </div>
-                            </div>
+                    <!-- Group 3: Good Checklist -->
+                    <div class="glass-panel checklist-group-card">
+                        <h3 class="checklist-group-title" style="color: var(--primary);">
+                            <span>✅</span> Successful Benchmarks
+                        </h3>
+                        <div class="checklist-items-stack" id="completed-tasks-container">
+                            <!-- Populated dynamically via JS -->
                         </div>
                     </div>
+
                 </div>
+
             </div>
 
-        </main>
-
-        <!-- Dynamic Overlay modal for Custom post creation -->
-        <div class="modal-overlay" id="quick-schedule-modal">
-            <div class="glass-panel modal-content-window">
-                <div class="modal-header">
-                    <h2>+ Dynamic Quick Scheduler</h2>
-                    <button class="modal-close" onclick="closeModal()">×</button>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Platform Target</label>
-                    <select id="modal-platform-select" class="form-control">
-                        <option value="facebook">Facebook</option>
-                        <option value="instagram">Instagram</option>
-                        <option value="youtube">YouTube Shorts</option>
-                        <option value="gmb">Google My Business</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Post Title Reference</label>
-                    <input type="text" id="modal-title-input" class="form-control" placeholder="e.g. Promotional Giveaway announcement">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Post Caption Content</label>
-                    <textarea id="modal-text-textarea" class="form-control" placeholder="Type or paste post description..." style="min-height: 120px;"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Calendar Date Target Offset (Days from Today)</label>
-                    <select id="modal-offset-select" class="form-control">
-                        <option value="1">Tomorrow</option>
-                        <option value="2">In 2 days</option>
-                        <option value="3">In 3 days</option>
-                        <option value="4">In 4 days</option>
-                        <option value="5">In 5 days</option>
-                        <option value="6">In 6 days</option>
-                        <option value="7">Next week</option>
-                    </select>
-                </div>
-
-                <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px;">
-                    <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-                    <button class="btn btn-primary" onclick="submitQuickSchedule()">Schedule Event</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Floating AI Processing Overlay Indicator -->
-        <div class="processing-overlay" id="processing-banner">
-            <div class="spinner-glow"></div>
-            <span>AI engine generating content...</span>
         </div>
 
     </div>
 
+    <!-- MODAL OVERLAYS -->
+
+    <!-- Modal 1: GMB Post Generator -->
+    <div class="modal-overlay" id="modal-gmb-post">
+        <div class="glass-panel modal-content-window">
+            <div class="modal-header">
+                <h2>✍️ AI GMB Post Generator</h2>
+                <button class="modal-close" onclick="closeActiveModal()">×</button>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">
+                Write an SEO-optimized weekly update containing local keywords based on your niche.
+            </p>
+            
+            <div class="form-group">
+                <label class="form-label">Tone of voice</label>
+                <select id="post-tone-select" class="form-control">
+                    <option value="bold">Bold & Energetic (High action)</option>
+                    <option value="casual">Casual & Friendly (Relatable)</option>
+                    <option value="professional">Professional (Benefits driven)</option>
+                    <option value="witty">Witty (Clever, slight humor)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Generated GMB Update Post</label>
+                <textarea id="modal-post-textarea" class="form-control" style="min-height: 140px;" placeholder="AI compiled post output..."></textarea>
+            </div>
+
+            <div class="modal-form-actions">
+                <button class="btn btn-secondary" onclick="closeActiveModal()">Cancel</button>
+                <button class="btn btn-secondary" onclick="generatePostAction()">🔄 Re-Write Post</button>
+                <button class="btn btn-primary" onclick="copyPostText()">📋 Copy Post</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: GMB Reviews Responder -->
+    <div class="modal-overlay" id="modal-gmb-reviews">
+        <div class="glass-panel modal-content-window">
+            <div class="modal-header">
+                <h2>💬 AI Review Responder</h2>
+                <button class="modal-close" onclick="closeActiveModal()">×</button>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">
+                Select a customer review below to generate a tailored keyword-dense response reply.
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 16px;" id="mock-reviews-stack">
+                <!-- Mock review cards loaded by JS -->
+            </div>
+
+            <div class="form-group" style="margin-top: 24px;">
+                <label class="form-label">Active AI Response Draft</label>
+                <textarea id="modal-reply-textarea" class="form-control" style="min-height: 100px;" placeholder="Click 'Generate Reply' on any review above..."></textarea>
+            </div>
+
+            <div class="modal-form-actions">
+                <button class="btn btn-secondary" onclick="closeActiveModal()">Close</button>
+                <button class="btn btn-primary" onclick="copyReplyText()">📋 Copy Reply</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: Local SEO Keywords Suggestor -->
+    <div class="modal-overlay" id="modal-gmb-keywords">
+        <div class="glass-panel modal-content-window">
+            <div class="modal-header">
+                <h2>🔍 Local Search Keywords Finder</h2>
+                <button class="modal-close" onclick="closeActiveModal()">×</button>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">
+                High-intent search queries that local customers use to find businesses like yours in Google Maps.
+            </p>
+
+            <div class="form-group">
+                <label class="form-label">Recommended Local SEO Keywords</label>
+                <input type="text" id="modal-keywords-input" class="form-control" placeholder="Compiling keywords..." readonly>
+                <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">
+                    Tip: Weave these exact search terms into your GMB description and weekly posts.
+                </p>
+            </div>
+
+            <div class="modal-form-actions">
+                <button class="btn btn-secondary" onclick="closeActiveModal()">Cancel</button>
+                <button class="btn btn-secondary" onclick="generateKeywordsAction()">🔄 Refresh Queries</button>
+                <button class="btn btn-primary" onclick="copyKeywordsText()">📋 Copy Keywords</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings & API Config Modal -->
+    <div class="modal-overlay" id="modal-settings">
+        <div class="glass-panel modal-content-window">
+            <div class="modal-header">
+                <h2>⚙️ API Key Configurations</h2>
+                <button class="modal-close" onclick="closeActiveModal()">×</button>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">
+                Enter your Google Gemini API key to enable live AI post generators and review responders.
+            </p>
+            
+            <div class="form-group">
+                <label class="form-label" style="color: var(--primary);">Google Gemini API Key</label>
+                <input type="password" id="settings-api-key-input" class="form-control" placeholder="AIzaSy...">
+                <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 6px; line-height: 1.4;">
+                    API keys are stored securely on your browser's local storage and are never sent to external servers. Get a free API key at <a href="https://aistudio.google.com/" target="_blank" style="text-decoration: underline; color: var(--primary);">Google AI Studio</a>.
+                </p>
+            </div>
+
+            <div class="modal-form-actions">
+                <button class="btn btn-secondary" onclick="closeActiveModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveSettings()">Save Configuration</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Processing status overlay -->
+    <div class="processing-overlay" id="global-processing-banner">
+        <div class="spinner-glow"></div>
+        <span>AI engine compiling localized assets...</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="landing-footer">
+        © 2026 GrowPilot AI. Recreated based on dhanda.app reference guidelines. All rights reserved.
+    </footer>
+
     <!-- Core Script Modules -->
     <script src="js/brand_manager.js"></script>
+    <script src="js/auditor.js"></script>
     <script src="js/generators.js"></script>
-    <script src="js/scheduler.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

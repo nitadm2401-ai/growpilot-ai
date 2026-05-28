@@ -1,0 +1,264 @@
+/* Audit Dashboard & Scanner Layouts */
+
+/* 1. Radar Scanning Screen */
+.audit-scanner-viewport {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    gap: 30px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.radar-sweep-container {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    position: relative;
+    background: radial-gradient(circle, rgba(142, 70, 45, 0.05) 0%, transparent 70%);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.radar-sweep-container::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 160px;
+    height: 160px;
+    background: conic-gradient(from 0deg, var(--primary) 0%, transparent 60%);
+    border-radius: 50%;
+    transform-origin: top left;
+    animation: rotateConic 2.5s linear infinite;
+    pointer-events: none;
+}
+
+/* Concentric rings in radar */
+.radar-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px dashed rgba(142, 70, 45, 0.2);
+}
+.radar-ring-1 { width: 50px; height: 50px; }
+.radar-ring-2 { width: 100px; height: 100px; }
+.radar-ring-3 { width: 140px; height: 140px; }
+
+.radar-scanner-blip {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: var(--secondary);
+    border-radius: 50%;
+    box-shadow: var(--glow-secondary);
+    animation: pulse 1.5s infinite;
+}
+
+.scanner-status-text {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.scanner-details-log {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    height: 20px;
+    text-align: center;
+    transition: var(--transition);
+}
+
+/* 2. Audit Report Page View */
+.audit-report-viewport {
+    display: none;
+    width: 100%;
+    max-width: 1100px;
+    padding: 40px 20px;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.report-split-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.8fr;
+    gap: 30px;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .report-split-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.report-sidebar-score {
+    padding: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Score Progress dial circle SVG */
+.score-circle-dial {
+    position: relative;
+    width: 150px;
+    height: 150px;
+}
+
+.score-circle-dial svg {
+    transform: rotate(-90deg);
+}
+
+.score-circle-track-bg {
+    fill: none;
+    stroke: var(--border-color);
+    stroke-width: 10;
+}
+
+.score-circle-fill-bar {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 10;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s ease-in-out;
+    filter: drop-shadow(0 0 6px var(--primary-glow));
+}
+
+.score-percentage-value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+
+.score-assessment-badge {
+    padding: 6px 16px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.score-quick-insights {
+    width: 100%;
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+}
+
+.insight-metric-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+}
+
+/* 3. Task Checklist items */
+.report-tasks-checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.checklist-group-card {
+    padding: 30px;
+}
+
+.checklist-group-title {
+    font-size: 1.15rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checklist-items-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.checklist-row-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-radius: var(--radius-sm);
+    background: hsla(222, 47%, 2%, 0.4);
+    border: 1px solid var(--border-color);
+    gap: 20px;
+    transition: var(--transition);
+}
+
+.checklist-row-item:hover {
+    border-color: rgba(255, 255, 255, 0.05);
+    background: hsla(222, 47%, 2%, 0.75);
+}
+
+.task-item-description {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.task-severity-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+    margin-top: 2px;
+}
+
+.task-text-body h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.task-text-body p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.checklist-row-item .btn {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+    .checklist-row-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .checklist-row-item .btn {
+        width: 100%;
+    }
+}
+
+/* Modals overlays styling */
+.modal-form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    justify-content: flex-end;
+}
+
+/* Radar rotation keyframes */
+@keyframes rotateConic {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
