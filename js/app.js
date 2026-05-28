@@ -300,19 +300,15 @@ function triggerImageGeneration() {
     const imageElement = document.getElementById("generated-image-element");
     const generatedUrl = ContentGenerator.getPollinationsImageURL(promptText, stylePreset, aspect);
 
-    // Load Image in background to show smooth complete event
-    const loaderImg = new Image();
-    loaderImg.src = generatedUrl;
-    loaderImg.onload = () => {
-        imageElement.src = generatedUrl;
-        posterCount++;
-        updateUISnapshots();
+    // Load directly in the image element natively to avoid CORS preloader blocks
+    imageElement.src = generatedUrl;
+    posterCount++;
+    updateUISnapshots();
+    
+    // Hide the processing loader overlay after a brief period to let image load natively
+    setTimeout(() => {
         hideLoader();
-    };
-    loaderImg.onerror = () => {
-        hideLoader();
-        alert("Error connecting to Pollinations.ai image server. Please try refreshing prompt.");
-    };
+    }, 1500);
 }
 
 function downloadGeneratedImage() {
@@ -463,16 +459,13 @@ function updateAvatarImageStyle() {
     const avatarPrompt = `${style}, Indian ethnic headshot, smiling portrait, studio soft focus lighting, solid clean white backdrop`;
     const generatedUrl = ContentGenerator.getPollinationsImageURL(avatarPrompt, "photorealistic", "1:1");
 
-    const loaderImg = new Image();
-    loaderImg.src = generatedUrl;
-    loaderImg.onload = () => {
-        imgElement.src = generatedUrl;
+    // Load directly in the image element natively to avoid CORS preloader blocks
+    imgElement.src = generatedUrl;
+
+    // Hide the processing loader overlay after a brief period to let image load natively
+    setTimeout(() => {
         hideLoader();
-    };
-    loaderImg.onerror = () => {
-        hideLoader();
-        alert("Error updating avatar frame.");
-    };
+    }, 1200);
 }
 
 async function triggerAvatarScriptGeneration() {

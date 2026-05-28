@@ -22,57 +22,85 @@ const BrandManager = {
 
     saveApiKey(key) {
         this.geminiKey = key.trim();
-        localStorage.setItem('growthaura_gemini_key', this.geminiKey);
+        try {
+            localStorage.setItem('growthaura_gemini_key', this.geminiKey);
+        } catch (e) {
+            console.warn("localStorage setItem failed (security / file protocol block):", e);
+        }
         return this.geminiKey;
     },
 
     loadApiKey() {
-        const saved = localStorage.getItem('growthaura_gemini_key');
-        if (saved) {
-            this.geminiKey = saved;
+        try {
+            const saved = localStorage.getItem('growthaura_gemini_key');
+            if (saved) {
+                this.geminiKey = saved;
+            }
+        } catch (e) {
+            console.warn("localStorage getItem failed (security / file protocol block):", e);
         }
         return this.geminiKey;
     },
 
     saveBrandProfile(profile) {
         this.brandProfile = { ...this.brandProfile, ...profile };
-        localStorage.setItem('growthaura_brand_profile', JSON.stringify(this.brandProfile));
+        try {
+            localStorage.setItem('growthaura_brand_profile', JSON.stringify(this.brandProfile));
+        } catch (e) {
+            console.warn("localStorage setItem failed (security / file protocol block):", e);
+        }
         return this.brandProfile;
     },
 
     loadBrandProfile() {
-        const saved = localStorage.getItem('growthaura_brand_profile');
-        if (saved) {
-            try {
-                this.brandProfile = JSON.parse(saved);
-            } catch (e) {
-                console.error("Failed to parse cached brand profile.", e);
+        try {
+            const saved = localStorage.getItem('growthaura_brand_profile');
+            if (saved) {
+                try {
+                    this.brandProfile = JSON.parse(saved);
+                } catch (e) {
+                    console.error("Failed to parse cached brand profile.", e);
+                }
             }
+        } catch (e) {
+            console.warn("localStorage getItem failed (security / file protocol block):", e);
         }
         return this.brandProfile;
     },
 
     saveScheduledEvents() {
-        localStorage.setItem('growthaura_scheduled_events', JSON.stringify(this.scheduledEvents));
+        try {
+            localStorage.setItem('growthaura_scheduled_events', JSON.stringify(this.scheduledEvents));
+        } catch (e) {
+            console.warn("localStorage setItem failed (security / file protocol block):", e);
+        }
     },
 
     loadScheduledEvents() {
-        const saved = localStorage.getItem('growthaura_scheduled_events');
-        if (saved) {
-            try {
-                this.scheduledEvents = JSON.parse(saved);
-            } catch (e) {
-                console.error("Failed to parse scheduled events.", e);
-                this.scheduledEvents = [];
+        try {
+            const saved = localStorage.getItem('growthaura_scheduled_events');
+            if (saved) {
+                try {
+                    this.scheduledEvents = JSON.parse(saved);
+                } catch (e) {
+                    console.error("Failed to parse scheduled events.", e);
+                    this.scheduledEvents = [];
+                }
+            } else {
+                this.setDefaultEvents();
             }
-        } else {
-            // Default mock events
-            this.scheduledEvents = [
-                { id: 1, date: "2026-05-15", title: "Launch Poster", type: "poster" },
-                { id: 2, date: "2026-05-20", title: "Reel: Organic Supplements", type: "video" }
-            ];
+        } catch (e) {
+            console.warn("localStorage getItem failed, using in-memory default events:", e);
+            this.setDefaultEvents();
         }
         return this.scheduledEvents;
+    },
+
+    setDefaultEvents() {
+        this.scheduledEvents = [
+            { id: 1, date: "2026-05-15", title: "Launch Poster", type: "poster" },
+            { id: 2, date: "2026-05-20", title: "Reel: Organic Supplements", type: "video" }
+        ];
     },
 
     addScheduledEvent(date, title, type) {
